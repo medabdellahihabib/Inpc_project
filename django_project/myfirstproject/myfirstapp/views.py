@@ -8,6 +8,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import ProductFamily, Product
 from .forms import ProductForm, ProductFamilyForm
 
+def accueil(request):
+    return render(request, 'myfirstapp/accueil.html')
+
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'myfirstapp/product_list.html', {'products': products})
