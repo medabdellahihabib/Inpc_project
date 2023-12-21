@@ -1,0 +1,17 @@
+<!-- myfirstapp/templates/myfirstapp/product_family_new.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>New Product Family</title>
+</head>
+<body>
+    <h1>New Product Family</h1>
+    <form method="post" action="{% url 'product_family_new' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create product family</button>
+    </form>
+    <a href="{% url 'product_family_list' %}">Cancel</a>
+</body>
+</html>

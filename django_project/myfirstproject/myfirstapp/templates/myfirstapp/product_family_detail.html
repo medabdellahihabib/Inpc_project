@@ -1,0 +1,13 @@
+<!-- myfirstapp/templates/myfirstapp/product_family_detail.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Family Detail</title>
+</head>
+<body>
+    <h1>Product Family Detail</h1>
+    <p><strong>Name:</strong> {{ product_family.name }}</p>
+    <a href="{% url 'product_family_list' %}">Back to product family list</a>
+</body>
+</html>

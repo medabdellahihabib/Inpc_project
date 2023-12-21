@@ -1,0 +1,17 @@
+<!-- myfirstapp/templates/myfirstapp/product_family_edit.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Product Family</title>
+</head>
+<body>
+    <h1>Edit Product Family</h1>
+    <form method="post" action="{% if product_family.id %}{% url 'product_family_edit' pk=product_family.pk %}{% else %}{% url 'product_family_new' %}{% endif %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save changes</button>
+    </form>
+    <a href="{% url 'product_family_detail' pk=product_family.pk %}">Cancel</a>
+</body>
+</html>

@@ -1,9 +1,4 @@
 from django.db import models
-
-# Create your models here.
-
-# myfirstapp/models.py
-
 from django.db import models
 
 class ProductFamily(models.Model):
