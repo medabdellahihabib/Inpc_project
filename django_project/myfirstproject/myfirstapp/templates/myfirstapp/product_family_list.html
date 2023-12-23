@@ -1,17 +1,32 @@
 <!-- myfirstapp/templates/myfirstapp/product_family_list.html -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Family List</title>
+    <!-- Ajouter le lien vers le fichier CSS Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
-<body>
-    <h1>Product Family List</h1>
-    <ul>
-        {% for product_family in product_families %}
-            <li><a href="{% url 'product_family_detail' pk=product_family.pk %}">{{ product_family.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'product_family_new' %}">Add a new product family</a>
+<body class="bg-light">
+    <!-- Utiliser les classes Bootstrap pour le style -->
+    <div class="container mt-5">
+        <h1>Product Family List</h1>
+        <ul class="list-group">
+            {% for product_family in product_families %}
+                <li class="list-group-item"><a href="{% url 'product_family_detail' pk=product_family.pk %}">{{ product_family.name }}</a></li>
+            {% endfor %}
+        </ul>
+        
+        <!-- Utiliser les classes Bootstrap pour styliser le bouton "Add a new product family" -->
+        <a href="{% url 'product_family_new' %}" class="btn btn-primary mt-3">Add a new product family</a>
+        
+        <!-- Ajouter le fichier JavaScript Bootstrap (optionnel) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </div>
 </body>
 </html>
+

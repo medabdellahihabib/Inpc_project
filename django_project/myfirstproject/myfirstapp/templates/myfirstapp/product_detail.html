@@ -1,15 +1,56 @@
 <!-- myfirstapp/templates/myfirstapp/product_detail.html -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ product.name }} Details</title>
+    <!-- Ajouter le lien vers le fichier CSS Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
-<body>
-    <h1>{{ product.name }}</h1>
-    <p>{{ product.description }}</p>
-    <p>Family: {{ product.family }}</p>
-    <a href="{% url 'product_edit' pk=product.pk %}">Edit</a>
-    <a href="{% url 'product_list' %}">Back to list</a>
+<body class="bg-light">
+    <!-- Utiliser les classes Bootstrap pour le style -->
+    <div class="container mt-5">
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <p>Family: {{ product.family }}</p>
+        
+        <!-- Utiliser les classes Bootstrap pour styliser les liens "Edit" et "Delete" -->
+        <a href="{% url 'product_edit' pk=product.pk %}" class="btn btn-primary mr-2">Edit</a>
+        <a href="#" class="btn btn-danger mr-2" data-toggle="modal" data-target="#deleteConfirmation">Delete</a>
+        
+        <!-- Bouton "Back to list" positionné de la même manière -->
+        <a href="{% url 'product_list' %}" class="btn btn-secondary">Back to list</a>
+    </div>
+
+    <!-- Confirmation de suppression modal -->
+    <div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationLabel">Delete Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the product "{{ product.name }}"?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <a href="{% url 'product_delete' pk=product.pk %}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ajouter le fichier JavaScript Bootstrap (optionnel) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+

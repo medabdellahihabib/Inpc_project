@@ -1,11 +1,92 @@
-<!-- myfirstapp/templates/myfirstapp/accueil.html -->
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Projet ANSAD</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANSAD</title>
+    <!-- Add the link to the Bootstrap CSS file -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url("{% static 'images/s2.png' %}");
+            background-size: cover;
+            background-position: center;
+            color: white; /* Text color */
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center horizontally */
+            justify-content: center;
+            height: 100vh; /* Adjust height to 100% of the view */
+            padding-left: 20px; /* Add left margin */
+            padding-right: 20px; /* Add right margin */
+        }
+
+        h1 {
+            font-size: 4.5rem; /* Larger font size */
+            color: #007bff; /* Bootstrap blue color */
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add glow effect */
+            animation: pulse 1.5s infinite; /* Add pulsating animation */
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .logo {
+            width: 400px; /* Adjust logo size as needed */
+            margin-bottom: 0px; /* Add bottom margin to the logo */
+            margin-top: -35cm; /* Add top margin to the logo */
+        }
+
+        .contact-info {
+            font-size: 45px; /* Increase text size */
+            color: black; /* Text color */
+            margin-top: 20px; /* Add top margin to the section */
+        }
+
+        .contact-info a {
+            color: black; /* Link color */
+            margin-right: 20px; /* Add margin between links */
+        }
+
+        .facebook-logo {
+            width: 23px; /* Adjust Facebook logo size */
+        }
+    </style>
 </head>
 <body>
-    <h1> Projet ANSAD</h1>
-    <!-- Ajoutez d'autres éléments au besoin -->
+    <div class="container">
+        <img src="{% static 'images/ansade.jpeg' %}" alt="ANSAD Logo" class="logo">
+        <h1 class="display-4">ANSADE</h1>
+        <!-- Add other elements as needed -->
+    </div>
+
+    <div class="contact-info">
+        <a href="mailto:info@ansade.mr">info@ansade.mr</a>
+        <a href="https://web.facebook.com/ansade.rim" target="_blank" class="facebook-logo">
+            <img src="{% static 'images/f.jpeg' %}" alt="Facebook Logo">
+        </a>
+    </div>
+
+    <!-- Add the Bootstrap JavaScript file (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
