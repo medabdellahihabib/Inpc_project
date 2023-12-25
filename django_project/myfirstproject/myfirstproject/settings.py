@@ -76,14 +76,26 @@ WSGI_APPLICATION = 'myfirstproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-
+# settings.py
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR.joinpath('db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': 'root',
+        'PASSWORD': '12345678',
+        'HOST': 'localhost',  # ou l'adresse IP de votre serveur MySQL
+        'PORT': '3306',       # le port par défaut de MySQL
     }
 }
+
+
+# DATABASES = {
+ #   'default': {
+  #      'ENGINE': 'django.db.backends.sqlite3',
+  #      'NAME': BASE_DIR.joinpath('db.sqlite3'),
+  #  }
+  # }
 
 
 # Password validation
