@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Liste des Paniers</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Label</th>
+        <th>Code</th>
+        <!-- Ajoutez d'autres colonnes selon votre modèle -->
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for panier in paniers %}
+        <tr>
+          <td>{{ panier.id }}</td>
+          <td>{{ panier.label }}</td>
+          <td>{{ panier.code }}</td>
+          <!-- Ajoutez d'autres colonnes selon votre modèle -->
+          <td>
+            <a href="{% url 'panier_detail' pk=panier.id %}" class="btn btn-info btn-sm">Détails</a>
+            <a href="{% url 'panier_edit' pk=panier.id %}" class="btn btn-warning btn-sm">Modifier</a>
+            <a href="{% url 'panier_delete' pk=panier.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url 'panier_new' %}" class="btn btn-primary btn-sm">Nouveau Panier</a>
+{% endblock %}
+
+
+
+

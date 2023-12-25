@@ -1,0 +1,17 @@
+<!-- point_de_vente_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Point de Vente Detail</h1>
+  <p>ID: {{ point_de_vente.id }}</p>
+  <p>Code: {{ point_de_vente.code }}</p>
+  <p>Wilaya: {{ point_de_vente.wilaya }}</p>
+  <p>Moughataa: {{ point_de_vente.moughataa }}</p>
+  <p>Commune: {{ point_de_vente.commune }}</p>
+  <p>GPS Latitude: {{ point_de_vente.gps_lat }}</p>
+  <p>GPS Longitude: {{ point_de_vente.gps_long }}</p>
+  <a href="{% url 'point_de_vente_edit' pk=point_de_vente.pk %}">Edit Point de Vente</a>
+  <a href="{% url 'point_de_vente_delete' pk=point_de_vente.pk %}">Delete Point de Vente</a>
+{% endblock %}
+

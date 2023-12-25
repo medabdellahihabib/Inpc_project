@@ -1,0 +1,12 @@
+
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Nouveau Panier</h2>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+  </form>
+  <a href="{% url 'panier_list' %}" class="btn btn-secondary">Annuler</a>
+{% endblock %}
+

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Détails du Produit #{{ produit.id }}</h2>
+  <dl class="row">
+    <dt class="col-sm-3">Label</dt>
+    <dd class="col-sm-9">{{ produit.label }}</dd>
+    
+    <dt class="col-sm-3">Price Unit</dt>
+    <dd class="col-sm-9">{{ produit.price_unit }}</dd>
+    
+    <dt class="col-sm-3">Code</dt>
+    <dd class="col-sm-9">{{ produit.code }}</dd>
+    
+    <!-- Ajoutez d'autres champs selon votre modèle -->
+  </dl>
+  <a href="{% url 'produit_list' %}" class="btn btn-secondary btn-sm">Retour à la liste</a>
+{% endblock %}

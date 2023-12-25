@@ -38,8 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myfirstapp'
+    'myfirstapp',
+    'bootstrap5',
+    
 ]
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,8 +89,8 @@ DATABASES = {
         'NAME': 'django',
         'USER': 'root',
         'PASSWORD': '12345678',
-        'HOST': 'localhost',  # ou l'adresse IP de votre serveur MySQL
-        'PORT': '3306',       # le port par défaut de MySQL
+        'HOST': 'localhost',  
+        'PORT': '3306',      
     }
 }
 

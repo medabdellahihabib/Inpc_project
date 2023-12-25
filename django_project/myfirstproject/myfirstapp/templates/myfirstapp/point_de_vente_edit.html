@@ -1,0 +1,13 @@
+<!-- point_de_vente_edit.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Edit Point de Vente</h1>
+  <form method="POST" class="post-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save changes</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Modifier Price #{{ price.id }}</h2>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+  </form>
+  <a href="{% url 'price_list' %}" class="btn btn-secondary">Annuler</a>
+{% endblock %}

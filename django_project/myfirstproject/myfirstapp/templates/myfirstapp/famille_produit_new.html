@@ -1,0 +1,11 @@
+
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Nouvelle Famille de Produit</h2>
+  <form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+  </form>
+  <a href="{% url 'famille_produit_list' %}" class="btn btn-secondary">Annuler</a>
+{% endblock %}

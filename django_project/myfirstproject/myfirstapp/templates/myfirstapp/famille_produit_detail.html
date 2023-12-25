@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Détails de la Famille de Produit #{{ famille_produit.id }}</h2>
+  <dl class="row">
+    <dt class="col-sm-3">Label</dt>
+    <dd class="col-sm-9">{{ famille_produit.label }}</dd>
+    
+    <!-- Ajoutez d'autres champs selon votre modèle -->
+  </dl>
+  <a href="{% url 'famille_produit_list' %}" class="btn btn-secondary btn-sm">Retour à la liste</a>
+{% endblock %}
