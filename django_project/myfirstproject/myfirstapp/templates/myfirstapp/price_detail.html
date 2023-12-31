@@ -3,14 +3,24 @@
 {% block content %}
   <h2>Détails du Price #{{ price.id }}</h2>
   <dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9">{{ price.id }}</dd>
+
     <dt class="col-sm-3">Value</dt>
     <dd class="col-sm-9">{{ price.value }}</dd>
-    
+
     <dt class="col-sm-3">Date</dt>
     <dd class="col-sm-9">{{ price.date }}</dd>
-    
+
+    <dt class="col-sm-3">Point ID</dt>
+    <dd class="col-sm-9">{{ price.point_ID.id }}</dd>
+
+    <dt class="col-sm-3">Produit ID</dt>
+    <dd class="col-sm-9">{{ price.produit_ID.id }}</dd>
+
     <!-- Ajoutez d'autres champs selon votre modèle -->
   </dl>
   <a href="{% url 'price_list' %}" class="btn btn-secondary btn-sm">Retour à la liste</a>
 {% endblock %}
+
 

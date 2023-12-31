@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Liste des Paniers Produits</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Price ID</th>
+        <th>Panier ID</th>
+        <th>Pondération</th>
+        <!-- Ajoutez d'autres colonnes selon votre modèle -->
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for panier_produit in panier_produits %}
+        <tr>
+          <td>{{ panier_produit.id }}</td>
+          <td>{{ panier_produit.price_ID.id }}</td>
+          <td>{{ panier_produit.panier_ID.id }}</td>
+          <td>{{ panier_produit.ponderation }}</td>
+          <!-- Ajoutez d'autres colonnes selon votre modèle -->
+          <td>
+            <a href="{% url 'panier_produit_detail' pk=panier_produit.id %}" class="btn btn-info btn-sm">Détails</a>
+            <a href="{% url 'panier_produit_edit' pk=panier_produit.id %}" class="btn btn-warning btn-sm">Modifier</a>
+            <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('Panier Produit #{{ panier_produit.id }}', '{% url 'panier_produit_delete' pk=panier_produit.id %}')">Supprimer</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="{% url 'panier_produit_new' %}" class="btn btn-primary btn-sm">Nouveau Panier Produit</a>
+
+  <!-- JavaScript pour la confirmation de suppression -->
+  <script>
+    function confirmDelete(label, deleteUrl) {
+      var userResponse = confirm("Voulez-vous vraiment supprimer ID  " + label + " ?");
+      if (userResponse) {
+        window.location.href = deleteUrl;  // Rediriger vers l'URL de suppression si l'utilisateur confirme
+      }
+    }
+  </script>
+{% endblock %}
+

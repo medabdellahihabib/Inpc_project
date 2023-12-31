@@ -19,14 +19,18 @@ body {
     padding-right: 20px;
 }
 
+
 /* Styles for the h1 tag */
 h1 {
-    font-size: 4.5rem;
+    font-size: 30px; /* Augmentez la taille du texte selon vos besoins */
     color: #007bff;
     margin-bottom: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    animation: pulse 1.5s infinite;
+    animation: pulse 3s infinite;
 }
+
+
+
 
 /* Pulsating animation */
 @keyframes pulse {

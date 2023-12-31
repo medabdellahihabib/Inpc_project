@@ -15,12 +15,12 @@ class FamilleProduitForm(forms.ModelForm):
 class ProduitForm(forms.ModelForm):
     class Meta:
         model = Produit
-        fields = ['label', 'price_unit', 'code', 'famille_produit']
+        fields = ['label', 'price_unit', 'code', 'famille_produit_ID']
 
 class PriceForm(forms.ModelForm):
     class Meta:
         model = Price
-        fields = ['value', 'date', 'point', 'produit']
+        fields = ['value', 'date', 'point_ID', 'produit_ID']
 
 class PanierForm(forms.ModelForm):
     class Meta:
@@ -30,5 +30,4 @@ class PanierForm(forms.ModelForm):
 class PanierProduitForm(forms.ModelForm):
     class Meta:
         model = PanierProduit
-        fields = ['price', 'panier', 'ponderation']
-
+        fields = ['price_ID', 'panier_ID', 'ponderation']

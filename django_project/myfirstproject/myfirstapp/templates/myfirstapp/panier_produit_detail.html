@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Détails du Panier Produit #{{ panier_produit.id }}</h2>
+  <dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9">{{ panier_produit.id }}</dd>
+
+    <dt class="col-sm-3">Price ID</dt>
+    <dd class="col-sm-9">{{ panier_produit.price_ID.id }}</dd>
+
+    <dt class="col-sm-3">Panier ID</dt>
+    <dd class="col-sm-9">{{ panier_produit.panier_ID.id }}</dd>
+
+    <dt class="col-sm-3">Pondération</dt>
+    <dd class="col-sm-9">{{ panier_produit.ponderation }}</dd>
+
+    <!-- Ajoutez d'autres champs selon votre modèle -->
+  </dl>
+  <a href="{% url 'panier_produit_list' %}" class="btn btn-secondary btn-sm">Retour à la liste</a>
+{% endblock %}

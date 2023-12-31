@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 {% block content %}
   <h2>Liste des Points de Vente</h2>
@@ -30,11 +29,21 @@
           <td>
             <a href="{% url 'point_de_vente_detail' pk=point_de_vente.id %}" class="btn btn-info btn-sm">Détails</a>
             <a href="{% url 'point_de_vente_edit' pk=point_de_vente.id %}" class="btn btn-warning btn-sm">Modifier</a>
-            <a href="{% url 'point_de_vente_delete' pk=point_de_vente.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+            <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ point_de_vente.id }}', '{% url 'point_de_vente_delete' pk=point_de_vente.id %}')">Supprimer</a>
           </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
   <a href="{% url 'point_de_vente_new' %}" class="btn btn-primary btn-sm">Nouveau Point de Vente</a>
+
+  <!-- JavaScript pour la confirmation de suppression -->
+  <script>
+    function confirmDelete(id, deleteUrl) {
+      var userResponse = confirm("Voulez-vous vraiment supprimer le point de vente avec l'ID '" + id + "' ?");
+      if (userResponse) {
+        window.location.href = deleteUrl;  // Rediriger vers l'URL de suppression si l'utilisateur confirme
+      }
+    }
+  </script>
 {% endblock %}

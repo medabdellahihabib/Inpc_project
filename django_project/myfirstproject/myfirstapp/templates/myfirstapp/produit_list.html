@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
   <h2>Liste des Produits</h2>
   <table class="table">
@@ -9,6 +8,7 @@
         <th>Label</th>
         <th>Price Unit</th>
         <th>Code</th>
+        <th>Famille Produit ID</th>
         <!-- Ajoutez d'autres colonnes selon votre modèle -->
         <th>Actions</th>
       </tr>
@@ -20,15 +20,26 @@
           <td>{{ produit.label }}</td>
           <td>{{ produit.price_unit }}</td>
           <td>{{ produit.code }}</td>
+          <td>{{ produit.famille_produit_ID.id }}</td>
           <!-- Ajoutez d'autres colonnes selon votre modèle -->
           <td>
             <a href="{% url 'produit_detail' pk=produit.id %}" class="btn btn-info btn-sm">Détails</a>
             <a href="{% url 'produit_edit' pk=produit.id %}" class="btn btn-warning btn-sm">Modifier</a>
-            <a href="{% url 'produit_delete' pk=produit.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+            <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ produit.label }}', '{% url 'produit_delete' pk=produit.id %}')">Supprimer</a>
           </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
   <a href="{% url 'produit_new' %}" class="btn btn-primary btn-sm">Nouveau Produit</a>
+
+  <!-- JavaScript pour la confirmation de suppression -->
+  <script>
+    function confirmDelete(label, deleteUrl) {
+      var userResponse = confirm("Voulez-vous vraiment supprimer le produit avec le label '" + label + "' ?");
+      if (userResponse) {
+        window.location.href = deleteUrl;  // Rediriger vers l'URL de suppression si l'utilisateur confirme
+      }
+    }
+  </script>
 {% endblock %}

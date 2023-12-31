@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
   <h2>Liste des Prices</h2>
   <table class="table">
@@ -8,7 +7,8 @@
         <th>ID</th>
         <th>Value</th>
         <th>Date</th>
-        <!-- Ajoutez d'autres colonnes selon votre modèle -->
+        <th>Point ID</th>
+        <th>Produit ID</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -18,17 +18,26 @@
           <td>{{ price.id }}</td>
           <td>{{ price.value }}</td>
           <td>{{ price.date }}</td>
-          <!-- Ajoutez d'autres colonnes selon votre modèle -->
+          <td>{{ price.point_ID.id }}</td>
+          <td>{{ price.produit_ID.id }}</td>
           <td>
             <a href="{% url 'price_detail' pk=price.id %}" class="btn btn-info btn-sm">Détails</a>
             <a href="{% url 'price_edit' pk=price.id %}" class="btn btn-warning btn-sm">Modifier</a>
-            <a href="{% url 'price_delete' pk=price.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+            <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ price.id }}', '{% url 'price_delete' pk=price.id %}')">Supprimer</a>
           </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
   <a href="{% url 'price_new' %}" class="btn btn-primary btn-sm">Nouveau Price</a>
+
+  <!-- JavaScript pour la confirmation de suppression -->
+  <script>
+    function confirmDelete(id, deleteUrl) {
+      var userResponse = confirm("Voulez-vous vraiment supprimer le prix avec l'ID '" + id + "' ?");
+      if (userResponse) {
+        window.location.href = deleteUrl;  // Rediriger vers l'URL de suppression si l'utilisateur confirme
+      }
+    }
+  </script>
 {% endblock %}
-
-

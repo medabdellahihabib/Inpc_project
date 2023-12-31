@@ -1,4 +1,8 @@
 
+
+
+
+
 {% extends 'base.html' %}
 {% block content %}
   <h2>Détails du Panier #{{ panier.id }}</h2>
@@ -8,10 +12,11 @@
     
     <dt class="col-sm-3">Code</dt>
     <dd class="col-sm-9">{{ panier.code }}</dd>
+
+    <dt class="col-sm-3">Description</dt>
+    <dd class="col-sm-9">{{ panier.description }}</dd>
     
     <!-- Ajoutez d'autres champs selon votre modèle -->
   </dl>
   <a href="{% url 'panier_list' %}" class="btn btn-secondary btn-sm">Retour à la liste</a>
 {% endblock %}
-
-

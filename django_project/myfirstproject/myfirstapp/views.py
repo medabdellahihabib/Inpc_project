@@ -11,6 +11,23 @@ def accueil(request):
     return render(request, 'myfirstapp/accueil.html')
 
 
+def services(request):
+    return render(request,'myfirstapp/services.html')
+
+
+def about_us(request):
+    return render(request, 'myfirstapp/about_us.html')
+
+def ansade(request):
+    return render(request, 'myfirstapp/index.html')
+
+
+
+
+
+
+
+
 # Vues pour Panier
 def panier_list(request):
     paniers = Panier.objects.all()
@@ -210,3 +227,47 @@ def point_de_vente_delete(request, pk):
     point_de_vente.delete()
     return redirect('point_de_vente_list')
 
+
+
+
+# views.py
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import PanierProduit
+from .forms import PanierProduitForm
+
+# Vues pour PanierProduit
+def panier_produit_list(request):
+    panier_produits = PanierProduit.objects.all()
+    return render(request, 'myfirstapp/panier_produit_list.html', {'panier_produits': panier_produits})
+
+def panier_produit_detail(request, pk):
+    panier_produit = get_object_or_404(PanierProduit, pk=pk)
+    return render(request, 'myfirstapp/panier_produit_detail.html', {'panier_produit': panier_produit})
+
+def panier_produit_new(request):
+    if request.method == "POST":
+        form = PanierProduitForm(request.POST)
+        if form.is_valid():
+            panier_produit = form.save(commit=False)
+            panier_produit.save()
+            return redirect('panier_produit_detail', pk=panier_produit.pk)
+    else:
+        form = PanierProduitForm()
+    return render(request, 'myfirstapp/panier_produit_edit.html', {'form': form})
+
+def panier_produit_edit(request, pk):
+    panier_produit = get_object_or_404(PanierProduit, pk=pk)
+    if request.method == "POST":
+        form = PanierProduitForm(request.POST, instance=panier_produit)
+        if form.is_valid():
+            panier_produit = form.save(commit=False)
+            panier_produit.save()
+            return redirect('panier_produit_detail', pk=panier_produit.pk)
+    else:
+        form = PanierProduitForm(instance=panier_produit)
+    return render(request, 'myfirstapp/panier_produit_edit.html', {'form': form})
+
+def panier_produit_delete(request, pk):
+    panier_produit = get_object_or_404(PanierProduit, pk=pk)
+    panier_produit.delete()
+    return redirect('panier_produit_list')
