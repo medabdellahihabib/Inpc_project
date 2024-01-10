@@ -2,6 +2,59 @@
 {% load static %}
 
 {% block content %}
+<style>
+  /* Styles for the box class */
+  .box {
+    background: #fff; /* Changement de la couleur du fond en blanc */
+    border: 1px solid #007bff; /* Maintien de la couleur bleue de la bordure */
+    padding: 20px;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    color: #000; /* Changement de la couleur du texte en noir */
+  }
+
+  /* Style for the decorative border */
+  .box:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #007bff; /* Maintien de la couleur bleue de la bordure */
+    border-radius: 15px;
+    box-sizing: border-box;
+    z-index: -1;
+  }
+
+  /* Style for the hover effect */
+  .box:hover {
+    transform: scale(1.05);
+  }
+
+  /* Styles for the icon class */
+  .icon {
+    width: 30px; /* Changement de la taille des icônes à 30px */
+    height: 30px; /* Changement de la taille des icônes à 30px */
+    margin-bottom: 15px;
+  }
+
+  /* Styles for the title and description class */
+  .title {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+
+  .description {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+</style>
+
 <div class="search container w-60 pb-3 pt-4">
   <div class="text-center">
     <div class="form-outline">
@@ -11,50 +64,69 @@
     </div>
   </div>
 
-  <!-- ======= Services Section ======= -->
-  <section id="services">
-    <div class="container" data-aos="fade-up">
-      <div class="section-header">
-        <div class="row gy-4">
+<!-- ======= Services Section ======= -->
+<section id="services">
+  <div class="container" data-aos="fade-up">
+    <div class="section-header">
+      <div class="row gy-4">
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="box">
-              <img src="{% static 'images/indice.png' %}" alt="Icon 1" class="icon">
-              <h4 class="title"><a href="/listeclasses/">Gestion des Elèves</a></h4>
-              <p class="description">Visualiser, Modifier Ou Gerer les données des élèves</p>
-            </div>
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="box">
+            <img src="{% static 'images/indice.png' %}" class="img-fluid icon" alt="Calcul de l'INPC">
+            <h4 class="title"><a href="#">Calcul de l'INPC</a></h4>
+            <p class="description">
+              Calculer l'INPC à partir des données enregistrées dans les modèles de l'application.
+              Offrir la possibilité d'importer les données à partir d'un fichier CSV pour une mise à jour facile.
+            </p>
           </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="box">
-              <img src="{% static 'images/evolution.png' %}" alt="Icon 2" class="icon">
-              <h4 class="title"><a href="/listeparents/">Gestion des Parents</a></h4>
-              <p class="description">Visualiser, Modifier Ou Gerer les données des Parents</p>
-            </div>
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="box">
-              <img src="{% static 'images/predictive.png' %}" alt="Icon 3" class="icon">
-              <h4 class="title"><a href="/uploadA/">Importer les donnees d'absences</a></h4>
-              <p class="description">Importer d'un fichier CSV les données des absences</p>
-            </div>
-          </div>
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="box">
-              <div class="icon"><i class="bi bi-journal-plus"></i></div>
-              <h4 class="title"><a href="/uploadN/">Importer les donnees des notes</a></h4>
-              <p class="description">importer d'un fichier csv les donnees des notes</p>
-            </div>
-          </div>
-    
-
         </div>
+
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="box">
+            <img src="{% static 'images/evolution.png' %}" alt="Graphes et distribution" class="img-fluid icon">
+            <h4 class="title"><a href="#">Graphes et Distribution</a></h4>
+            <p class="description">
+              Créer des graphiques et des distributions au fil des années ou semestrielles,
+              ainsi que suivre l'évolution de l'INPC.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="box">
+            <img src="{% static 'images/predictive.png' %}" alt="Modèles de machine learning" class="img-fluid icon">
+            <h4 class="title"><a href="#">Modèles de Machine Learning</a></h4>
+            <p class="description">
+              Fournir des modèles de machine learning pour prédire l'évolution de l'INPC
+              basée sur les données historiques.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="box">
+            <img src="{% static 'images/import_export.png' %}" alt="Importation et exportation des données" class="img-fluid icon">
+            <h4 class="title"><a href="#">Importation et Exportation des Données</a></h4>
+            <p class="description">
+              Offrir la possibilité d'importer les données à partir d'un fichier CSV
+              ou d'exporter les données pour une utilisation externe.
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
-  </section><!-- End Services Section -->
+  </div>
+</section><!-- End Services Section -->
 </div>
-{% endblock content %}
 
+<!-- Ajout du script JavaScript pour forcer la hauteur à 100% -->
+<script>
+  window.onload = function() {
+    document.documentElement.style.height = '100%';
+    document.body.style.height = '100%';
+  };
+</script>
+
+{% endblock content %}
 

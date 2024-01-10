@@ -1,6 +1,32 @@
+
+
 {% extends 'base.html' %}
 {% block content %}
   <h2>Liste des Prices</h2>
+
+  <!-- Import form -->
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile" accept=".csv">
+    <button type="submit" name="import_data" class="btn btn-success btn-sm">Importer</button>
+  </form>
+
+  <!-- Export form -->
+  <form method="post" action="{% url 'export_prices_csv' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-sm">Exporter</button>
+  </form>
+
+  <!-- Display import error messages -->
+  {% if error_messages %}
+    <div class="alert alert-danger" role="alert">
+      {% for message in error_messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Table of Prices -->
   <table class="table">
     <thead>
       <tr>
@@ -23,21 +49,25 @@
           <td>
             <a href="{% url 'price_detail' pk=price.id %}" class="btn btn-info btn-sm">Détails</a>
             <a href="{% url 'price_edit' pk=price.id %}" class="btn btn-warning btn-sm">Modifier</a>
-            <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ price.id }}', '{% url 'price_delete' pk=price.id %}')">Supprimer</a>
+            <button onclick="confirmDelete('{{ price.id }}', '{% url 'price_delete' pk=price.id %}')" class="btn btn-danger btn-sm">Supprimer</button>
           </td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+
+  <!-- Link to create a new Price -->
   <a href="{% url 'price_new' %}" class="btn btn-primary btn-sm">Nouveau Price</a>
 
-  <!-- JavaScript pour la confirmation de suppression -->
+  <!-- JavaScript for delete confirmation -->
   <script>
     function confirmDelete(id, deleteUrl) {
       var userResponse = confirm("Voulez-vous vraiment supprimer le prix avec l'ID '" + id + "' ?");
       if (userResponse) {
-        window.location.href = deleteUrl;  // Rediriger vers l'URL de suppression si l'utilisateur confirme
+        window.location.href = deleteUrl;  // Redirect to the delete URL if the user confirms
       }
     }
   </script>
+
 {% endblock %}
+

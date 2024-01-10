@@ -1,14 +1,35 @@
 {% extends 'base.html' %}
+
 {% block content %}
   <h2>Liste des Produits</h2>
+
+  <!-- Ajout des boutons d'importation et d'exportation -->
+  <form method="post" enctype="multipart/form-data" style="margin-bottom: 10px;">
+    {% csrf_token %}
+    <input type="file" name="myfile" accept=".csv" required>
+    <button type="submit" name="import_data" class="btn btn-success btn-sm">Importer</button>
+  </form>
+
+  <a href="{% url 'export_produits_csv' %}" class="btn btn-primary btn-sm">Exporter Produits</a>
+
+  <!-- Affichage des erreurs d'importation -->
+  {% if error_messages %}
+    <div class="alert alert-danger" role="alert">
+      {% for message in error_messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Tableau des produits -->
   <table class="table">
     <thead>
       <tr>
         <th>ID</th>
         <th>Label</th>
-        <th>Price Unit</th>
         <th>Code</th>
-        <th>Famille Produit ID</th>
+        <th>Prix unitaire</th>
+        <th>Famille de Produit</th>
         <!-- Ajoutez d'autres colonnes selon votre modèle -->
         <th>Actions</th>
       </tr>
@@ -18,9 +39,9 @@
         <tr>
           <td>{{ produit.id }}</td>
           <td>{{ produit.label }}</td>
-          <td>{{ produit.price_unit }}</td>
           <td>{{ produit.code }}</td>
-          <td>{{ produit.famille_produit_ID.id }}</td>
+          <td>{{ produit.price_unit }}</td>
+          <td>{{ produit.famille_produit_ID.label }}</td>
           <!-- Ajoutez d'autres colonnes selon votre modèle -->
           <td>
             <a href="{% url 'produit_detail' pk=produit.id %}" class="btn btn-info btn-sm">Détails</a>
@@ -36,7 +57,7 @@
   <!-- JavaScript pour la confirmation de suppression -->
   <script>
     function confirmDelete(label, deleteUrl) {
-      var userResponse = confirm("Voulez-vous vraiment supprimer le produit avec le label '" + label + "' ?");
+      var userResponse = confirm("Voulez-vous vraiment supprimer le produit '" + label + "' ?");
       if (userResponse) {
         window.location.href = deleteUrl;  // Rediriger vers l'URL de suppression si l'utilisateur confirme
       }

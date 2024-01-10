@@ -1,29 +1,38 @@
-
+from django.contrib import admin  # Add this line to import the admin object
+from django.urls import path
+from .views import panier_produit_export
 from . import views 
 from django.urls import path
+from .views import export_produits_csv
+
+
 from .views import (
-    panier_list, about_us ,ansade, panier_detail, panier_new, panier_edit, panier_delete,
+    panier_list,export_prices_csv , panier_produit_export ,export_produits_csv,export_famille_produits_csv , export_points_de_vente_csv ,export_paniers_csv, about_us, inpc_graphs_view , visualisation_view ,export_csv_view ,panier_detail, panier_new, panier_edit, panier_delete,
     price_list, price_detail, price_new, price_edit, price_delete,
     produit_list, produit_detail, produit_new, produit_edit, produit_delete,
     famille_produit_list, famille_produit_detail, famille_produit_new, famille_produit_edit, famille_produit_delete,
     point_de_vente_list, point_de_vente_detail, point_de_vente_new, point_de_vente_edit, point_de_vente_delete,panier_produit_list,
-    panier_produit_detail, panier_produit_new,panier_produit_edit, panier_produit_delete,
+    panier_produit_detail, panier_produit_new,panier_produit_edit, panier_produit_delete,inpc_view,inpc_view1 ,
 )
+
 
 urlpatterns = [
     # URL pour Panier
-    path('accueil/', views.accueil, name='accueil'),
+    path('', views.accueil, name='accueil'),
     path('services/',views.services,name='services'),
     path('about_us/', about_us, name='about_us'),
-    path('', ansade, name='ansade'),
     
+    # path('price_evolution_chart/', PriceEvolutionChart.as_view(), name='price_evolution_chart'),
     
-    
-    path('panier/', views.panier_list, name='panier_list'),
+    path('panier/', views.panier_list, name='panier_list'), 
     path('panier/<int:pk>/', views.panier_detail, name='panier_detail'),
     path('panier/new/', views.panier_new, name='panier_new'),
     path('panier/<int:pk>/edit/', views.panier_edit, name='panier_edit'),
     path('panier/<int:pk>/delete/', views.panier_delete, name='panier_delete'),
+    path('export_paniers_csv/', export_paniers_csv, name='export_paniers_csv'),
+    
+    
+    
 
     # URL pour Price
     path('price/', views.price_list, name='price_list'),
@@ -31,6 +40,9 @@ urlpatterns = [
     path('price/new/', views.price_new, name='price_new'),
     path('price/<int:pk>/edit/', views.price_edit, name='price_edit'),
     path('price/<int:pk>/delete/', views.price_delete, name='price_delete'),
+    path('export_prices_csv/', views.export_prices_csv, name='export_prices_csv'),
+    
+    
 
     # URL pour Produit
     path('produit/', views.produit_list, name='produit_list'),
@@ -38,6 +50,9 @@ urlpatterns = [
     path('produit/new/', views.produit_new, name='produit_new'),
     path('produit/<int:pk>/edit/', views.produit_edit, name='produit_edit'),
     path('produit/<int:pk>/delete/', views.produit_delete, name='produit_delete'),
+    path('export_produits_csv/', views.export_produits_csv, name='export_produits_csv'),
+    
+    
 
     # URL pour FamilleProduit
     path('famille-produit/', views.famille_produit_list, name='famille_produit_list'),
@@ -45,6 +60,8 @@ urlpatterns = [
     path('famille-produit/new/', views.famille_produit_new, name='famille_produit_new'),
     path('famille-produit/<int:pk>/edit/', views.famille_produit_edit, name='famille_produit_edit'),
     path('famille-produit/<int:pk>/delete/', views.famille_produit_delete, name='famille_produit_delete'),
+    path('export_famille_produits_csv/', views.export_famille_produits_csv, name='export_famille_produits_csv'),
+
 
     # URL pour PointDeVente
     path('point-de-vente/', views.point_de_vente_list, name='point_de_vente_list'),
@@ -52,6 +69,8 @@ urlpatterns = [
     path('point-de-vente/new/', views.point_de_vente_new, name='point_de_vente_new'),
     path('point-de-vente/<int:pk>/edit/', views.point_de_vente_edit, name='point_de_vente_edit'),
     path('point-de-vente/<int:pk>/delete/', views.point_de_vente_delete, name='point_de_vente_delete'),
+    path('export_points_de_vente_csv/', views.export_points_de_vente_csv, name='export_points_de_vente_csv'),
+    
     
     
     # URL pour panier_produit
@@ -60,8 +79,28 @@ urlpatterns = [
     path('panier_produit/new/', panier_produit_new, name='panier_produit_new'),
     path('panier_produit/<int:pk>/edit/', panier_produit_edit, name='panier_produit_edit'),
     path('panier_produit/<int:pk>/delete/', panier_produit_delete, name='panier_produit_delete'),
+    path('panier_produit_export/', views.panier_produit_export, name='panier_produit_export'),
+    
+    
+    
+    
+    
+    
+    
+    path('predict/', inpc_view1, name='inpc_view1'),
+    
+    path('inpc/', inpc_view, name='inpc_view'),
+    
+    path('export_csv/', export_csv_view, name='export_csv'),
+    
+    path('visualisation/', visualisation_view, name='visualisation'),
+    
+    path('inpc_graphs/', inpc_graphs_view, name='inpc_graphs'),
+    
     
 ]
+
+
 
 
 

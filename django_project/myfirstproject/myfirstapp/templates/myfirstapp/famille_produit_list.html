@@ -1,12 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
   <h2>Liste des Familles de Produits</h2>
+
+  <!-- Import form -->
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile" accept=".csv">
+    <button type="submit" name="import_data" class="btn btn-success btn-sm">Importer</button>
+  </form>
+
+  <!-- Export form -->
+  <form method="post" action="{% url 'export_famille_produits_csv' %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" name="export_data" class="btn btn-primary btn-sm">Exporter</button>
+  </form>
+
+  <!-- Display import error messages -->
+  {% if error_messages %}
+    <div class="alert alert-danger" role="alert">
+      {% for message in error_messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Table of Familles de Produits -->
   <table class="table">
     <thead>
       <tr>
         <th>ID</th>
         <th>Label</th>
-        <!-- Ajoutez d'autres colonnes selon votre modèle -->
         <th>Actions</th>
       </tr>
     </thead>
@@ -15,7 +38,6 @@
         <tr>
           <td>{{ famille_produit.id }}</td>
           <td>{{ famille_produit.label }}</td>
-          <!-- Ajoutez d'autres colonnes selon votre modèle -->
           <td>
             <a href="{% url 'famille_produit_detail' pk=famille_produit.id %}" class="btn btn-info btn-sm">Détails</a>
             <a href="{% url 'famille_produit_edit' pk=famille_produit.id %}" class="btn btn-warning btn-sm">Modifier</a>
@@ -32,7 +54,7 @@
     function confirmDelete(label, deleteUrl) {
       var userResponse = confirm("Voulez-vous vraiment supprimer la famille de produits '" + label + "' ?");
       if (userResponse) {
-        window.location.href = deleteUrl;  // Rediriger vers l'URL de suppression si l'utilisateur confirme
+        window.location.href = deleteUrl;
       }
     }
   </script>

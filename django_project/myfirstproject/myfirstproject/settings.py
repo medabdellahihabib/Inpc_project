@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myfirstapp',
     'bootstrap5',
+    'import_export',
+    'chartjs',
     
 ]
 
@@ -88,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django',
         'USER': 'root',
-        'PASSWORD': '12345678',
+        'PASSWORD': '13051028',
         'HOST': 'localhost',  
         'PORT': '3306',      
     }

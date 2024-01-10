@@ -1,14 +1,38 @@
 {% extends 'base.html' %}
+
 {% block content %}
   <h2>Liste des Paniers Produits</h2>
+
+  <!-- Ajout des boutons d'importation et d'exportation -->
+  <form method="post" enctype="multipart/form-data" style="margin-bottom: 10px;">
+    {% csrf_token %}
+    <input type="file" name="myfile" accept=".csv" required>
+    <button type="submit" name="import_data" class="btn btn-success btn-sm">Importer</button>
+  </form>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" name="export_data" class="btn btn-primary btn-sm">Exporter</button>
+  </form>
+
+  <!-- Affichage des erreurs d'importation -->
+  {% if error_messages %}
+    <div class="alert alert-danger" role="alert">
+      {% for message in error_messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Tableau des paniers produits -->
   <table class="table">
     <thead>
       <tr>
         <th>ID</th>
-        <th>Price ID</th>
-        <th>Panier ID</th>
-        <th>Pondération</th>
-        <!-- Ajoutez d'autres colonnes selon votre modèle -->
+        <th>Price Value</th>
+        <th>Price Date</th>
+        <th>Panier Label</th>
+        <th>Ponderation</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -16,29 +40,57 @@
       {% for panier_produit in panier_produits %}
         <tr>
           <td>{{ panier_produit.id }}</td>
-          <td>{{ panier_produit.price_ID.id }}</td>
-          <td>{{ panier_produit.panier_ID.id }}</td>
+          <td>{{ panier_produit.price_ID.value }}</td>
+          <td>{{ panier_produit.price_ID.date }}</td>
+          <td>{{ panier_produit.panier_ID.label }}</td>
           <td>{{ panier_produit.ponderation }}</td>
-          <!-- Ajoutez d'autres colonnes selon votre modèle -->
           <td>
             <a href="{% url 'panier_produit_detail' pk=panier_produit.id %}" class="btn btn-info btn-sm">Détails</a>
             <a href="{% url 'panier_produit_edit' pk=panier_produit.id %}" class="btn btn-warning btn-sm">Modifier</a>
-            <a href="#" class="btn btn-danger btn-sm" onclick="confirmDelete('Panier Produit #{{ panier_produit.id }}', '{% url 'panier_produit_delete' pk=panier_produit.id %}')">Supprimer</a>
+            <button class="btn btn-danger btn-sm" onclick="confirmDelete({{ panier_produit.id }})">Supprimer</button>
           </td>
         </tr>
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="confirmDeleteModal{{ panier_produit.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmation de suppression</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cet élément ?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger">Supprimer</button>
+              </div>
+            </div>
+          </div>
+        </div>
       {% endfor %}
     </tbody>
   </table>
+
   <a href="{% url 'panier_produit_new' %}" class="btn btn-primary btn-sm">Nouveau Panier Produit</a>
 
   <!-- JavaScript pour la confirmation de suppression -->
   <script>
-    function confirmDelete(label, deleteUrl) {
-      var userResponse = confirm("Voulez-vous vraiment supprimer ID  " + label + " ?");
-      if (userResponse) {
-        window.location.href = deleteUrl;  // Rediriger vers l'URL de suppression si l'utilisateur confirme
-      }
+    function confirmDelete(panierProduitId) {
+      // Form the URL for the delete view
+      var deleteUrl = "{% url 'panier_produit_delete' pk=123 %}".replace("123", panierProduitId);
+
+      // Show the confirmation modal
+      $('#confirmDeleteModal' + panierProduitId).modal('show');
+
+      // When the user clicks on "Supprimer" in the modal, navigate to the delete URL
+      $('#confirmDeleteModal' + panierProduitId + ' .btn-danger').on('click', function() {
+        window.location.href = deleteUrl;
+      });
     }
   </script>
 {% endblock %}
+
 

@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
   <h2>Liste des Points de Vente</h2>
+
+  <!-- Import form -->
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile" accept=".csv">
+    <button type="submit" name="import_data" class="btn btn-success btn-sm">Importer</button>
+  </form>
+
+  <!-- Export form -->
+  <form method="post" action="{% url 'export_points_de_vente_csv' %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" name="export_data" class="btn btn-primary btn-sm">Exporter</button>
+  </form>
+
+  <!-- Display import error messages -->
+  {% if error_messages %}
+    <div class="alert alert-danger" role="alert">
+      {% for message in error_messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Table of Points de Vente -->
   <table class="table">
     <thead>
       <tr>
@@ -11,7 +35,6 @@
         <th>Commune</th>
         <th>Latitude</th>
         <th>Longitude</th>
-        <!-- Ajoutez d'autres colonnes selon votre modèle -->
         <th>Actions</th>
       </tr>
     </thead>
@@ -25,7 +48,6 @@
           <td>{{ point_de_vente.commune }}</td>
           <td>{{ point_de_vente.gps_lat }}</td>
           <td>{{ point_de_vente.gps_long }}</td>
-          <!-- Ajoutez d'autres colonnes selon votre modèle -->
           <td>
             <a href="{% url 'point_de_vente_detail' pk=point_de_vente.id %}" class="btn btn-info btn-sm">Détails</a>
             <a href="{% url 'point_de_vente_edit' pk=point_de_vente.id %}" class="btn btn-warning btn-sm">Modifier</a>
@@ -42,8 +64,9 @@
     function confirmDelete(id, deleteUrl) {
       var userResponse = confirm("Voulez-vous vraiment supprimer le point de vente avec l'ID '" + id + "' ?");
       if (userResponse) {
-        window.location.href = deleteUrl;  // Rediriger vers l'URL de suppression si l'utilisateur confirme
+        window.location.href = deleteUrl;
       }
     }
   </script>
 {% endblock %}
+

@@ -1,0 +1,111 @@
+<!-- inpc_graphs.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .graph-container {
+        margin-bottom: 30px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        position: relative; /* Ajout de la position relative */
+    }
+
+    .graph-container iframe {
+        width: 100%;
+        height: 400px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #007bff;
+    }
+
+    h1 {
+        margin-bottom: 30px;
+    }
+
+    .graph-title {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        border-radius: 10px 10px 0 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .graph-description {
+        padding: 20px;
+        color: #007bff;
+        text-align: center;
+    }
+
+    /* Ajoutez d'autres styles selon vos préférences */
+</style>
+
+<div class="container mt-5">
+    <!-- Graphique 1 -->
+    <div class="graph-container">
+        <div class="graph-title">
+            <h2>Évolution de l'INPC par mois (2016-2023)</h2>
+        </div>
+        {{ graph1_html|safe }}
+        <div class="graph-description">
+            <p>Ce graphique interactif représente l'évolution de l'Indice National des Prix à la Consommation (INPC) par mois de l'année 2016 à 2023.</p>
+        </div>
+    </div>
+
+    <!-- Graphique 2 -->
+    <div class="graph-container">
+        <div class="graph-title">
+            <h2>Évolution de l'INPC par année (2016-2023)</h2>
+        </div>
+        {{ graph2_html|safe }}
+        <div class="graph-description">
+            <p>Ce graphique interactif montre l'évolution de l'Indice National des Prix à la Consommation (INPC) par année de 2016 à 2023, avec une animation basée sur les mois.</p>
+        </div>
+    </div>
+
+    <!-- Graphique 3 -->
+    <div class="graph-container">
+        <div class="graph-title">
+            <h2>Valeurs INPC par année (2016-2023)</h2>
+        </div>
+        {{ graph3_html|safe }}
+        <div class="graph-description">
+            <p>Ce graphique à barres représente les valeurs de l'Indice National des Prix à la Consommation (INPC) par année de 2016 à 2023.</p>
+        </div>
+    </div>
+
+    <!-- Graphique 4 -->
+    <div class="graph-container">
+        <div class="graph-title">
+            <h2>Corrélation entre les années (2016-2023)</h2>
+        </div>
+        {{ graph4_html|safe }}
+        <div class="graph-description">
+            <p>Ce graphique en nuage de points montre la corrélation entre les valeurs de l'Indice National des Prix à la Consommation (INPC) pour chaque mois de 2016 à 2023.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+

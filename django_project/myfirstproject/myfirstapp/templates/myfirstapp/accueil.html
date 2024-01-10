@@ -1,8 +1,9 @@
-{% load static %}
-
+<!-- combined.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ANSAD</title>
@@ -10,8 +11,85 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <!-- Link to your external CSS file -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <!-- Ajoutez ces styles dans votre fichier CSS (styles.css) ou directement dans le balisage style de votre page -->
+    <style>
+        .navbar-nav .nav-link {
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #fff;
+        }
+
+        .navbar-nav .dropdown-menu {
+            background-color: #17a2b8; /* Couleur de fond du menu déroulant */
+        }
+
+        .navbar-nav .dropdown-menu a.donnees-item {
+            font-size: 60px; /* Augmentez la taille de la police */
+            color: #fff; /* Couleur du texte */
+            padding: 45px 45px; /* Espacement interne */
+        }
+
+        .navbar-nav .dropdown-menu a.donnees-item:hover {
+            background-color: #138496; /* Couleur de fond au survol */
+            color: #fff; /* Couleur du texte au survol */
+        }
+    </style>
 </head>
+
 <body>
+
+    <!-- Your Navbar Code -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-info p-3">
+        <div class="container-fluid">
+            <div id="logo">
+                <a class="navbar-brand" href="#">
+                    <span class="logo-light" style="color: #fff;">AN</span><span class="logo-dark" style="color: #333;">SADE</span>
+                </a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link mx-3 active" aria-current="accueil" href="{% url 'accueil' %}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-3" href="{% url 'services' %}">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-3" href="{% url 'about_us' %}">About Us</a>
+                    </li>
+                    <!-- Ajouter le menu déroulant -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle mx-3" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Données
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item donnees-item" href="{% url 'panier_list' %}">Panier</a>
+                            <a class="dropdown-item donnees-item" href="{% url 'price_list' %}">Price</a>
+                            <a class="dropdown-item donnees-item" href="{% url 'produit_list' %}">Produit</a>
+                            <a class="dropdown-item donnees-item" href="{% url 'famille_produit_list' %}">Famille Produit</a>
+                            <a class="dropdown-item donnees-item" href="{% url 'point_de_vente_list' %}">Point de Vente</a>
+                            <a class="dropdown-item donnees-item" href="{% url 'panier_produit_list' %}">Panier Produit</a>
+                        </div>
+                    </li>
+                    <!-- Fin du menu déroulant -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Block to be filled by child pages -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
     <div class="container">
         <img src="{% static 'images/ansade.jpeg' %}" alt="ANSAD Logo" class="logo">
         <h1 class="display-4">ANSADE</h1>
@@ -30,4 +108,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
+
 </html>

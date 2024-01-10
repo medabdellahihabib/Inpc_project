@@ -1,0 +1,80 @@
+<!-- myfirstapp/templates/myfirstapp/prediction.html -->
+{% load static %}  <!-- Add this line at the top -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prédiction INPC</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 20px;
+        }
+        h1 {
+            color: #009688;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="submit"] {
+            background-color: #009688;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        p {
+            color: #009688;
+            font-weight: bold;
+        }
+        /* Added styles for the image */
+        img {
+            max-width: 100%; /* Ensure the image does not exceed its original width */
+            height: auto;    /* Maintain aspect ratio when resizing */
+            margin-top: 10px; /* Add some space above the image */
+        }
+        /* Added styles for the description */
+        .description {
+            margin-top: 20px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prédiction INPC</h1>
+
+    <form method="post" action="{% url 'inpc_view1' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Prédire">
+    </form>
+
+    <div class="description">
+        <p>Ci-dessous, vous trouverez la prédiction de l'Indice National des Prix à la Consommation (INPC) pour la date sélectionnée.</p>
+    </div>
+
+    {% if predicted_inpc is not None %}
+        <p>La prédiction de l'INPC pour le {{ form.cleaned_data.prediction_date|date:"F j, Y" }} est {{ predicted_inpc|floatformat:2 }}.</p>
+    {% endif %}
+
+    <img src="{% static 'images/pred.png' %}" alt="Prediction Image">
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

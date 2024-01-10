@@ -9,3 +9,10 @@ admin.site.register(Produit)
 admin.site.register(FamilleProduit)
 admin.site.register(PointDeVente)
 
+
+
+
+
+
+
+

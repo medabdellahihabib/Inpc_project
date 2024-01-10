@@ -6,6 +6,13 @@ class PointDeVenteForm(forms.ModelForm):
     class Meta:
         model = PointDeVente
         fields = ['code', 'wilaya', 'moughataa', 'commune', 'gps_lat', 'gps_long']
+        
+        
+from django import forms
+
+class CSVImportForm(forms.Form):
+    csv_file = forms.FileField()
+        
 
 class FamilleProduitForm(forms.ModelForm):
     class Meta:
@@ -27,7 +34,45 @@ class PanierForm(forms.ModelForm):
         model = Panier
         fields = ['label', 'code', 'description']
 
+from django import forms
+from .models import PanierProduit
+
 class PanierProduitForm(forms.ModelForm):
     class Meta:
         model = PanierProduit
         fields = ['price_ID', 'panier_ID', 'ponderation']
+
+from django import forms
+from .models import Price
+
+class PriceImportForm(forms.ModelForm):
+    class Meta:
+        model = Price
+        fields = ['value', 'date', 'point_ID', 'produit_ID']
+
+
+
+
+
+
+
+
+# myfirstapp/forms.py
+from django import forms
+
+class PredictionForm(forms.Form):
+    prediction_date = forms.DateField(
+        label='Prediction Date',
+        widget=forms.SelectDateWidget(years=[2024])  # Only include the year 2024
+    )
+
+
+# forms.py
+
+from django import forms
+from .models import Produit
+
+class PriceEvolutionForm(forms.Form):
+    produit = forms.ModelChoiceField(queryset=Produit.objects.all(), label='Produit')
+    start_date = forms.DateField(label='Date de début')
+    end_date = forms.DateField(label='Date de fin')
