@@ -1,0 +1,28 @@
+<!-- templates/myfirstapp/choose_product.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Choisissez un produit :</h2>
+
+  <form method="post" action="{% url 'choose_product' %}">
+    {% csrf_token %}
+    <label for="produit">Produit :</label>
+    <select id="produit" name="produit_id">
+      {% for produit in produits %}
+        <option value="{{ produit.id }}">{{ produit.label}}</option>
+        <h1>produit</h1>
+      {% endfor %}
+    </select>
+    <a href="#" id="afficherCourbe" class="btn btn-primary btn-sm">Afficher la courbe des prix</a>
+  </form>
+
+  <script>
+    // Add an event listener to the anchor tag to dynamically construct the URL
+    document.getElementById('afficherCourbe').addEventListener('click', function() {
+      var elt = document.getElementById('produit');
+      var produitId = elt.options[elt.selectedIndex].value;
+      var url = "{% url 'price_chart_page' 0 %}".replace('0', produitId);
+      window.location.href = url;
+    });
+  </script>
+{% endblock %}

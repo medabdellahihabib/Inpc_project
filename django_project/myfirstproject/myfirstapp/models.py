@@ -26,6 +26,8 @@ class Produit(models.Model):
 
     def __str__(self):
         return self.label
+    def get_absolute_url(self):
+        return reverse('price_chart', args=[str(self.id)])
 
 class Price(models.Model):
     value = models.FloatField()

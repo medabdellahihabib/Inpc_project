@@ -1,0 +1,98 @@
+<!-- templates/myfirstapp/price_chart.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/adapters/moment.min.js"></script>
+
+
+  <h2>{{ produit.label }} - Évolution des prix</h2>
+  
+  <form id="dateForm">
+    <label for="start_date">Date de début :</label>
+    <input type="date" id="start_date" name="start_date" value="{{ start_date }}">
+    
+    <label for="end_date">Date de fin :</label>
+    <input type="date" id="end_date" name="end_date" value="{{ end_date }}">
+    
+    <button type="button" id="showChartBtn" onclick="loadChart(start_date.value,end_date.value,{{produit_id}})">Afficher le graphique</button>
+  </form>
+
+  <canvas id="priceChart" width="800" height="400"></canvas>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Fonction pour charger le graphique
+    function loadChart(start_date, end_date, produit_id) {
+      // Reformater les dates pour correspondre au format Django
+      var formattedStartDate = start_date.split('-').join('-');
+      var formattedEndDate = end_date.split('-').join('-');
+      console.log(formattedStartDate);
+      console.log(formattedEndDate);
+      console.log(produit_id)
+
+      
+      
+    
+      // Faites une requête AJAX pour obtenir les données du graphique pour le produit sélectionné
+      $.ajax({
+        url: `http://127.0.0.1:8000/price-chart/${produit_id}/`,
+        method: 'GET',
+        success: function (data) {
+          console.log(data);
+      
+          // Get the canvas element
+          var ctx = document.getElementById('priceChart').getContext('2d');
+      // Filter data between start and end dates
+      var filteredLabels = [];
+      var filteredData = [];
+      formattedStartDate = new Date(formattedStartDate);
+      formattedEndDate = new Date(formattedEndDate);
+
+      for (var i = 0; i < data.labels.length; i++) {
+        var currentDate = new Date(data.labels[i]);
+        if (currentDate >= formattedStartDate && currentDate <= formattedEndDate) {
+          filteredLabels.push(data.labels[i]);
+          filteredData.push(data.data[i]);
+        }
+      }
+      console.log(filteredData);
+      console.log(filteredLabels);
+          // Check if a Chart instance exists, and destroy it
+          if (window.myChart) {
+            window.myChart.destroy();
+          }
+      
+          // Create a new Chart instance
+          window.myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: filteredLabels,
+              datasets: [{
+                label: 'Prix ',
+                data: filteredData,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                pointRadius: 5,
+                borderWidth: 4,
+                fill: false
+              }]
+            },
+            options: {}
+          });
+        },
+        error: function (error) {
+          console.log(error);
+        }
+      });
+      
+      
+    }
+    
+  </script>
+
+  
+{% endblock %}
+
+

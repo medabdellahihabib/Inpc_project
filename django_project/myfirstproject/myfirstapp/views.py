@@ -944,3 +944,106 @@ def inpc_graphs_view(request):
     
     
     
+
+
+
+
+
+
+# views.py
+from django.shortcuts import render
+from django.http import JsonResponse
+from myfirstapp.models import Price
+from datetime import datetime, timedelta
+
+# def price_chart(request, produit_id):
+#     # Récupérer les dates de début et de fin à partir des paramètres GET
+#     start_date_param = request.GET.get('start_date', None)
+#     end_date_param = request.GET.get('end_date', None)
+
+#     # Définir des dates par défaut si elles ne sont pas fournies
+#     start_date = datetime.strptime(start_date_param, '%Y-%m-%d') if start_date_param else datetime.now() - timedelta(days=365)
+#     end_date = datetime.strptime(end_date_param, '%Y-%m-%d') if end_date_param else datetime.now()
+
+#     # Récupérer les prix spécifiques au produit et les trier par date
+#     prices = Price.objects.filter(produit_ID__id=produit_id, date__range=(start_date, end_date)).order_by('date')
+
+#     # Préparer les données pour le graphique
+#     data = {
+#         'labels': [price.date for price in prices],
+#         'data': [price.value for price in prices],
+#     }
+
+#     return JsonResponse(data)
+
+# def price_chart_page(request, produit_id):
+#     return render(request, 'myfirstapp/price_chart.html', {'produit_id': produit_id})
+
+
+
+# views.py
+from django.shortcuts import render
+from django.http import JsonResponse
+from myfirstapp.models import Price
+from datetime import datetime, timedelta
+
+# views.py
+from django.shortcuts import render
+from django.http import JsonResponse
+from myfirstapp.models import Price
+from datetime import datetime, timedelta
+
+def price_chart(request, produit_id):
+    # Récupérer les dates de début et de fin à partir des paramètres GET
+    start_date_param = request.GET.get('start_date', None)
+    end_date_param = request.GET.get('end_date', None)
+
+    # Définir des dates par défaut si elles ne sont pas fournies
+    start_date = datetime.strptime(start_date_param, '%Y-%m-%d') if start_date_param else datetime.now() - timedelta(days=365)
+    end_date = datetime.strptime(end_date_param, '%Y-%m-%d') if end_date_param else datetime.now()
+
+    # Récupérer les prix spécifiques au produit et les trier par date
+    prices = Price.objects.filter(produit_ID__id=produit_id, date__range=(start_date, end_date)).order_by('date')
+
+    # Préparer les données pour le graphique
+    data = {
+        'labels': [price.date for price in prices],
+        'data': [price.value for price in prices],
+    }
+
+    return JsonResponse(data)
+
+def price_chart_page(request, produit_id):
+    return render(request, 'myfirstapp/price_chart.html', {'produit_id': produit_id})
+
+
+
+
+
+
+
+
+
+from django.shortcuts import render, redirect
+from myfirstapp.models import Produit
+from django.shortcuts import render
+from myfirstapp.models import Produit
+# views.py
+from django.shortcuts import render, redirect
+from myfirstapp.models import Produit
+
+def choose_product(request):
+    if request.method == 'POST':
+        produit_id = request.POST.get('produit_id')
+        if produit_id:
+            # Redirect to the price_chart view with the selected produit_id
+            return redirect('price_chart', produit_id=produit_id)
+
+    # Utilisez distinct() sur le champ label pour obtenir des produits distincts
+    produits = Produit.objects.values('label',"id").distinct()
+    return render(request, 'myfirstapp/choose_product.html', {'produits': produits})
+
+
+
+
+

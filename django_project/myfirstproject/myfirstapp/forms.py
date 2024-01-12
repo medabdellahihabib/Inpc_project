@@ -67,12 +67,3 @@ class PredictionForm(forms.Form):
     )
 
 
-# forms.py
-
-from django import forms
-from .models import Produit
-
-class PriceEvolutionForm(forms.Form):
-    produit = forms.ModelChoiceField(queryset=Produit.objects.all(), label='Produit')
-    start_date = forms.DateField(label='Date de début')
-    end_date = forms.DateField(label='Date de fin')

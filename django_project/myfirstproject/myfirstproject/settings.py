@@ -60,11 +60,29 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'myfirstproject.urls'
 
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS': [os.path.join(BASE_DIR, 'templates'), 'C:\\Users\\Dell\\Desktop\\ok\\ok\\medabdellahihabib\\django_project\\myfirstproject\\myfirstapp\\templates\\myfirstapp\\'],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]
+
+
+
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR],
-        'APP_DIRS': True,
+     {
+         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+         'DIRS': [os.path.join(BASE_DIR, 'templates'), 'C:\\Users\\Dell\\Desktop\\ok\\ok\\medabdellahihabib\\django_project\\myfirstproject\\myfirstapp\\templates\\myfirstapp\\'],
+         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -75,6 +93,12 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
+
+
+
 
 
 WSGI_APPLICATION = 'myfirstproject.wsgi.application'

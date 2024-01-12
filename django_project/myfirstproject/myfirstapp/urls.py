@@ -4,8 +4,7 @@ from .views import panier_produit_export
 from . import views 
 from django.urls import path
 from .views import export_produits_csv
-
-
+from .views import choose_product , price_chart , price_chart_page 
 from .views import (
     panier_list,export_prices_csv , panier_produit_export ,export_produits_csv,export_famille_produits_csv , export_points_de_vente_csv ,export_paniers_csv, about_us, inpc_graphs_view , visualisation_view ,export_csv_view ,panier_detail, panier_new, panier_edit, panier_delete,
     price_list, price_detail, price_new, price_edit, price_delete,
@@ -16,14 +15,26 @@ from .views import (
 )
 
 
+
 urlpatterns = [
     # URL pour Panier
+    
     path('', views.accueil, name='accueil'),
     path('services/',views.services,name='services'),
     path('about_us/', about_us, name='about_us'),
     
-    # path('price_evolution_chart/', PriceEvolutionChart.as_view(), name='price_evolution_chart'),
     
+    path('price-chart/<int:produit_id>/', price_chart, name='price_chart'),
+
+    path('price-chart-page/<int:produit_id>/', views.price_chart_page, name='price_chart_page'),
+    
+    path('chart/', choose_product, name='choose_product'),
+    # path('price-chart-page/<int:produit_id>/', price_chart_page, name='price_chart_page'),
+
+
+
+
+
     path('panier/', views.panier_list, name='panier_list'), 
     path('panier/<int:pk>/', views.panier_detail, name='panier_detail'),
     path('panier/new/', views.panier_new, name='panier_new'),
