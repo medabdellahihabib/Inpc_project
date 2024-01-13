@@ -730,13 +730,38 @@ def panier_produit_delete(request, pk):
 
 
 
+def visualisation_view(request):
+    # Assuming you have some logic to retrieve inpc_data
+    inpc_data = get_inpc_data()
+
+    return render(request, 'myfirstapp/visualisation.html', {'inpc_data': inpc_data})
+
+
 
 from django.shortcuts import render
+from django.http import HttpResponse
+import csv
 from .models import INPC
 
 def inpc_view(request):
     inpc_data = INPC.objects.all()
+
+    # Check if the user wants to download CSV
+    if 'download_csv' in request.GET:
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="donnees_inpc.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(['Mois', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023'])
+
+        # Add your data to export here
+        for data in inpc_data:
+            writer.writerow([data.mois, data.annee_2016, data.annee_2017, data.annee_2018, data.annee_2019, data.annee_2020, data.annee_2021, data.annee_2022, data.annee_2023])
+
+        return response
+
     return render(request, 'myfirstapp/visualisation.html', {'inpc_data': inpc_data})
+
 
 
 
@@ -842,10 +867,6 @@ def generate_pdf(predicted_inpc, prediction_date):
         return HttpResponse('Error generating PDF', status=500)
 
     return response
-
-
-
-
 
 
 
