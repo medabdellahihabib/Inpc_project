@@ -1,0 +1,53 @@
+<!-- myfirstapp/templates/myfirstapp/pdf_template.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Prédiction INPC</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 0mm; /* Ajustez les marges selon vos besoins */
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h2 {
+            color: #009688;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid black; /* Ajoutez cette ligne pour ajouter une bordure */
+        }
+        /* Ajoutez des styles supplémentaires au besoin */
+    </style>
+</head>
+<body>
+    <!-- Page 1: Prediction -->
+    <h2>Page 1</h2>
+    <div>
+        <h2>Prédiction INPC</h2>
+        <p>La prédiction de l'INPC pour le {{ prediction_date|date:"F j, Y" }} est {{ predicted_inpc|floatformat:2 }}.</p>
+    </div>
+
+    <!-- Page 2: Image -->
+    <h2>Page 2</h2>
+    <img src="{% static 'myfirstapp/images/page1.png' %}" alt="Page 2">
+
+    <!-- Page 3: Image -->
+    <h2>Page 3</h2>
+    <img src="{% static 'myfirstapp/images/page3.png' %}" alt="Page 3">
+</body>
+</html>
+{% endblock %}
+
+

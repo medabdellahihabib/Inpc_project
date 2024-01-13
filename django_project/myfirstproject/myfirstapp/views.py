@@ -746,11 +746,6 @@ def inpc_view(request):
 
 
 
-
-
-
-
-
 # myfirstapp/views.py
 from django.shortcuts import render
 from .forms import PredictionForm
@@ -800,13 +795,16 @@ def predict_inpc(date):
     prediction = model.predict(month_values[['2016', '2017', '2018', '2019', '2020', '2021', '2022', 'Mois_Num']])
     return prediction[0]
 
+
+
 def inpc_view1(request):
     if request.method == 'POST':
         form = PredictionForm(request.POST)
         if form.is_valid():
             prediction_date = form.cleaned_data['prediction_date']
             predicted_inpc = predict_inpc(prediction_date.strftime('%m/%d/%Y'))
-            return render(request, 'myfirstapp/prediction.html', {'predicted_inpc': predicted_inpc, 'form': form})
+            # Pass prediction_date to generate_pdf function
+            return generate_pdf(predicted_inpc, prediction_date)
     else:
         form = PredictionForm()
 
@@ -816,14 +814,63 @@ def inpc_view1(request):
 
 
 
+# myfirstapp/views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+# ... (autres importations)
+
+# myfirstapp/views.py
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+def generate_pdf(predicted_inpc, prediction_date):
+    template_path = 'myfirstapp/pdf_template.html'
+    context = {'predicted_inpc': predicted_inpc, 'prediction_date': prediction_date}
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="prediction_report.pdf"'
+
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisa_status = pisa.CreatePDF(html, dest=response)
+
+    if pisa_status.err:
+        return HttpResponse('Error generating PDF', status=500)
+
+    return response
 
 
 
-def visualisation_view(request):
-    # Assuming you have some logic to retrieve inpc_data
-    inpc_data = get_inpc_data()
 
-    return render(request, 'myfirstapp/visualisation.html', {'inpc_data': inpc_data})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -950,34 +997,7 @@ def inpc_graphs_view(request):
 
 
 
-# views.py
-from django.shortcuts import render
-from django.http import JsonResponse
-from myfirstapp.models import Price
-from datetime import datetime, timedelta
 
-# def price_chart(request, produit_id):
-#     # Récupérer les dates de début et de fin à partir des paramètres GET
-#     start_date_param = request.GET.get('start_date', None)
-#     end_date_param = request.GET.get('end_date', None)
-
-#     # Définir des dates par défaut si elles ne sont pas fournies
-#     start_date = datetime.strptime(start_date_param, '%Y-%m-%d') if start_date_param else datetime.now() - timedelta(days=365)
-#     end_date = datetime.strptime(end_date_param, '%Y-%m-%d') if end_date_param else datetime.now()
-
-#     # Récupérer les prix spécifiques au produit et les trier par date
-#     prices = Price.objects.filter(produit_ID__id=produit_id, date__range=(start_date, end_date)).order_by('date')
-
-#     # Préparer les données pour le graphique
-#     data = {
-#         'labels': [price.date for price in prices],
-#         'data': [price.value for price in prices],
-#     }
-
-#     return JsonResponse(data)
-
-# def price_chart_page(request, produit_id):
-#     return render(request, 'myfirstapp/price_chart.html', {'produit_id': produit_id})
 
 
 
@@ -1042,6 +1062,7 @@ def choose_product(request):
     # Utilisez distinct() sur le champ label pour obtenir des produits distincts
     produits = Produit.objects.values('label',"id").distinct()
     return render(request, 'myfirstapp/choose_product.html', {'produits': produits})
+
 
 
 

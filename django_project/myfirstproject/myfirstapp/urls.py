@@ -1,4 +1,7 @@
-from django.contrib import admin  # Add this line to import the admin object
+
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
 from django.urls import path
 from .views import panier_produit_export
 from . import views 
@@ -6,7 +9,7 @@ from django.urls import path
 from .views import export_produits_csv
 from .views import choose_product , price_chart , price_chart_page 
 from .views import (
-    panier_list,export_prices_csv , panier_produit_export ,export_produits_csv,export_famille_produits_csv , export_points_de_vente_csv ,export_paniers_csv, about_us, inpc_graphs_view , visualisation_view ,export_csv_view ,panier_detail, panier_new, panier_edit, panier_delete,
+    panier_list,export_prices_csv ,generate_pdf, panier_produit_export ,export_produits_csv,export_famille_produits_csv , export_points_de_vente_csv ,export_paniers_csv, about_us, inpc_graphs_view  ,export_csv_view ,panier_detail, panier_new, panier_edit, panier_delete,
     price_list, price_detail, price_new, price_edit, price_delete,
     produit_list, produit_detail, produit_new, produit_edit, produit_delete,
     famille_produit_list, famille_produit_detail, famille_produit_new, famille_produit_edit, famille_produit_delete,
@@ -18,6 +21,8 @@ from .views import (
 
 urlpatterns = [
     # URL pour Panier
+    
+    path('download-pdf/', generate_pdf, name='download_pdf'),
     
     path('', views.accueil, name='accueil'),
     path('services/',views.services,name='services'),
@@ -104,7 +109,6 @@ urlpatterns = [
     
     path('export_csv/', export_csv_view, name='export_csv'),
     
-    path('visualisation/', visualisation_view, name='visualisation'),
     
     path('inpc_graphs/', inpc_graphs_view, name='inpc_graphs'),
     
@@ -113,7 +117,8 @@ urlpatterns = [
 
 
 
-
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 

@@ -1,0 +1,114 @@
+/* Styles for the body of the page */
+body {
+    background-image: url("/static/images/s2.png");
+    background-size: cover;
+    background-position:  top;
+    color: white;
+    text-align: center;
+    padding-top: 20px;
+    
+}
+
+/* Styles for the container class */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 15vh;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+/* Styles for the h1 tag */
+h1 {
+    font-size: 4.5rem; /* Augmentez la taille du texte selon vos besoins */
+    color: #007bff;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: pulse 3s infinite;
+}
+
+
+
+
+/* Pulsating animation */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Styles for the logo class */
+.logo {
+    width: 420px;
+    margin-bottom: 20px;
+    margin-top: -200px; /* Assuming you intended pixels (px) instead of centimeters (cm) */
+}
+
+
+/* Styles for the contact-info class */
+.contact-info {
+    font-size: 45px;
+    color: black;
+    position: absolute;
+    bottom: 20px; /* Ajustez la distance par rapport au bas selon vos besoins */
+    left: 50%; /* Centre l'élément horizontalement */
+    transform: translateX(-50%); /* Centre l'élément horizontalement */
+}
+
+/* Styles for the contact-info links */
+.contact-info a {
+    color: black;
+    margin-right: 20px;
+}
+
+/* Styles for the facebook-logo class */
+.facebook-logo {
+    width: 3px;
+}
+
+
+/* Styles for the navbar class */
+.navbar {
+    height: 200px; /* Ajustez la hauteur selon vos besoins */
+}
+
+
+/* Styles for the navbar brand (logo) */
+.navbar-brand .logo-light,
+.navbar-brand .logo-dark {
+    font-size: 100px !important; /* Utilisation de !important pour forcer l'application du style */
+}
+
+
+/* Styles for the navbar links */
+.navbar-nav .nav-item .nav-link {
+    font-size: 80px !important; /* Utilisation de !important pour forcer l'application du style */
+}
+
+
+
+<!-- Ajoutez ces styles dans votre fichier CSS (styles.css) ou directement dans le balisage style de votre page -->
+<style>
+    .dropdown-menu {
+        background-color: #17a2b8; /* Couleur de fond du menu déroulant */
+    }
+
+    .dropdown-menu a.donnees-item {
+        font-size: 18px; /* Augmentez la taille de la police */
+        color: #fff; /* Couleur du texte */
+    }
+
+    .dropdown-menu a.donnees-item:hover {
+        background-color: #138496; /* Couleur de fond au survol */
+        color: #fff; /* Couleur du texte au survol */
+    }
+</style>

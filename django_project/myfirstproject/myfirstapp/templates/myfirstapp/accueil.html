@@ -56,9 +56,9 @@
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                    {% comment %} <li class="nav-item">
                         <a class="nav-link mx-3 active" aria-current="accueil" href="{% url 'accueil' %}">Accueil</a>
-                    </li>
+                    </li> {% endcomment %}
                     <li class="nav-item">
                         <a class="nav-link mx-3" href="{% url 'services' %}">Services</a>
                     </li>
@@ -79,6 +79,28 @@
                             <a class="dropdown-item donnees-item" href="{% url 'panier_produit_list' %}">Panier Produit</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-3" href="{% url 'inpc_view' %}">INPC</a>
+                    </li> 
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle mx-3" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            visualisation
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item donnees-item" href="{% url 'choose_product' %}">Evolutions des prix des produits</a>
+                            <a class="dropdown-item donnees-item" href="{% url 'inpc_graphs' %}">Evolution de l'inpc </a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link mx-3" href="{% url 'inpc_view1' %}">Prédiction</a>
+                    </li>
+
+
+
+
+
+
                     <!-- Fin du menu déroulant -->
                 </ul>
             </div>

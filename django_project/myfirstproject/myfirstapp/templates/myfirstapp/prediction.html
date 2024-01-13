@@ -63,10 +63,14 @@
 
     {% if predicted_inpc is not None %}
         <p>La prédiction de l'INPC pour le {{ form.cleaned_data.prediction_date|date:"F j, Y" }} est {{ predicted_inpc|floatformat:2 }}.</p>
+        
     {% endif %}
 
-    <img src="{% static 'images/pred.png' %}" alt="Prediction Image">
 
+    
+  
+    <img src="{% static 'images/pred.png' %}" alt="Prediction Image">
+ 
 </body>
 </html>
 

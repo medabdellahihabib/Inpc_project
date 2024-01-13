@@ -111,4 +111,10 @@ h1 {
         background-color: #138496; /* Couleur de fond au survol */
         color: #fff; /* Couleur du texte au survol */
     }
+
+
+    @media print {
+        /* Styles spécifiques pour l'impression */
+        /* ... */
+    }
 </style>
