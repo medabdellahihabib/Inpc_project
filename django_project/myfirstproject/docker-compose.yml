@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  ansaddb:
+    container_name: ansaddb
+    image: mysql
+    ports:
+      - "127.0.0.1:3316:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=13051028
+      - MYSQL_DATABASE=django
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=13051028
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci
+    volumes:
+      - ./data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+  
+
+
+  ansadweb:
+    container_name: ansadweb
+    build: .
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./django_project/myfirstproject:/app
+
+
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      ansaddb:
+        condition: service_healthy
+

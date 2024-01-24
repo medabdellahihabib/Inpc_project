@@ -23,44 +23,50 @@
       var end_date = form.querySelector('#end_date').value;
 
       $.ajax({
-        url: `http://127.0.0.1:8000/price-chart/${produit_id}/`,
+        url: http://127.0.0.1:8000/price-chart/${produit_id}/,
         method: 'GET',
         data: { start_date: start_date, end_date: end_date },
         success: function (data) {
           var ctx = document.getElementById('priceChart').getContext('2d');
-          var filteredLabels = [];
-          var filteredData = [];
-
-          for (var i = 0; i < data.labels.length; i++) {
-            var currentDate = new Date(data.labels[i]);
-            filteredLabels.push(data.labels[i]);
-            filteredData.push(data.data[i]);
-          }
-
+      
           if (window.myChart) {
-            window.myChart.destroy();
+              window.myChart.destroy();
           }
-
+      
           window.myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: filteredLabels,
-              datasets: [{
-                label: 'Prix moyen',
-                data: filteredData,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2,
-                fill: false
-              }]
-            },
-            options: {}
+              type: 'line',
+              data: {
+                  labels: data.labels,  // Assuming data.labels is an array of unique dates
+                  datasets: data.datasets.map(function (item) {
+                      return {
+                          label: 'Prix moyen - Point ' + item.point_ID,
+                          data: item.data.map(function (dataPoint) {
+                              return {
+                                  x: dataPoint.date,
+                                  y: dataPoint.avg_value
+                              };
+                          }),
+                          borderColor: 'rgba(' + getRandomColor() + ')',
+                          borderWidth: 2,
+                          fill: false,
+                      };
+                  }),
+              },
+              options: {
+                  scales: {
+                      x: {
+                          type: 'linear',  // Use 'linear' scale for numeric x-axis values
+                          position: 'bottom',
+                      },
+                  },
+                  // Customize other chart options if needed
+              },
           });
-        },
-        error: function (error) {
+      },
+      error: function (error) {
           console.log(error);
-        }
-      });
-    }
-  </script>
+      },
+    </script>
 
-{% endblock %}
+  
+{% endblock %} 

@@ -2,97 +2,95 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/adapters/moment.min.js"></script>
 
+<h2>{{ produit.label }} - Évolution des prix</h2>
 
-  <h2>{{ produit.label }} - Évolution des prix</h2>
+<form id="dateForm">
+  <label for="start_date">Date de début :</label>
+  <input type="date" id="start_date" name="start_date" value="{{ start_date }}">
   
-  <form id="dateForm">
-    <label for="start_date">Date de début :</label>
-    <input type="date" id="start_date" name="start_date" value="{{ start_date }}">
-    
-    <label for="end_date">Date de fin :</label>
-    <input type="date" id="end_date" name="end_date" value="{{ end_date }}">
-    
-    <button type="button" id="showChartBtn" onclick="loadChart(start_date.value,end_date.value,{{produit_id}})">Afficher le graphique</button>
-  </form>
-
-  <canvas id="priceChart" width="800" height="400"></canvas>
+  <label for="end_date">Date de fin :</label>
+  <input type="date" id="end_date" name="end_date" value="{{ end_date }}">
   
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    // Fonction pour charger le graphique
-    function loadChart(start_date, end_date, produit_id) {
-      // Reformater les dates pour correspondre au format Django
-      var formattedStartDate = start_date.split('-').join('-');
-      var formattedEndDate = end_date.split('-').join('-');
-      console.log(formattedStartDate);
-      console.log(formattedEndDate);
-      console.log(produit_id)
+  <button type="button" id="showChartBtn">Afficher le graphique</button>
+</form>
 
-      
-      
-    
-      // Faites une requête AJAX pour obtenir les données du graphique pour le produit sélectionné
-      $.ajax({
-        url: `http://127.0.0.1:8000/price-chart/${produit_id}/`,
-        method: 'GET',
-        success: function (data) {
-          console.log(data);
-      
-          // Get the canvas element
-          var ctx = document.getElementById('priceChart').getContext('2d');
-      // Filter data between start and end dates
-      var filteredLabels = [];
-      var filteredData = [];
-      formattedStartDate = new Date(formattedStartDate);
-      formattedEndDate = new Date(formattedEndDate);
+<canvas id="priceChart" width="800" height="400"></canvas>
 
-      for (var i = 0; i < data.labels.length; i++) {
-        var currentDate = new Date(data.labels[i]);
-        if (currentDate >= formattedStartDate && currentDate <= formattedEndDate) {
-          filteredLabels.push(data.labels[i]);
-          filteredData.push(data.data[i]);
-        }
-      }
-      console.log(filteredData);
-      console.log(filteredLabels);
-          // Check if a Chart instance exists, and destroy it
-          if (window.myChart) {
-            window.myChart.destroy();
-          }
-      
-          // Create a new Chart instance
-          window.myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: filteredLabels,
-              datasets: [{
-                label: 'Prix ',
-                data: filteredData,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                pointRadius: 5,
-                borderWidth: 4,
-                fill: false
-              }]
-            },
-            options: {}
-          });
-        },
-        error: function (error) {
-          console.log(error);
-        }
+<script>
+  // Use the IIFE pattern to avoid conflicts
+  (function($) {
+    $(document).ready(function() {
+      $("#showChartBtn").on("click", function() {
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
+        var produit_id = {{ produit_id }};
+        loadChart(start_date, end_date, produit_id);
       });
-      
-      
-    }
-    
-  </script>
 
-  
+      function loadChart(start_date, end_date, produit_id) {
+        var formattedStartDate = start_date.split('-').join('-');
+        var formattedEndDate = end_date.split('-').join('-');
+
+        $.ajax({
+          url: `/price-chart/${produit_id}/`,
+          method: 'GET',
+          data: { start_date: formattedStartDate, end_date: formattedEndDate },
+          success: function (data) {
+            var ctx = document.getElementById('priceChart').getContext('2d');
+
+            if (window.myChart) {
+              window.myChart.destroy();
+            }
+
+            window.myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: data.labels,
+                datasets: data.datasets.map(function (item) {
+                  return {
+                    label: item.label,
+                    data: item.data,
+                    backgroundColor: item.backgroundColor,
+                    borderColor: item.borderColor,
+                    borderWidth: item.borderWidth
+                  };
+                }),
+              },
+              options: {
+                scales: {
+                  x: {
+                    title: {
+                      display: true,
+                      text: 'Dates'
+                    }
+                  },
+                  y: {
+                    title: {
+                      display: true,
+                      text: 'Prix moyen'
+                    }
+                  }
+                },
+                plugins: {
+                  legend: {
+                    display: true,
+                    position: 'top'
+                  }
+                }
+              }
+            });
+          },
+          error: function (error) {
+            console.log('Error loading chart data:', error);
+          }
+        });
+      }
+    });
+  })(jQuery); // Pass jQuery to the IIFE
+</script>
+
 {% endblock %}
-
-

@@ -11,6 +11,11 @@ class PointDeVente(models.Model):
     def __str__(self):
         return self.code 
 
+
+
+
+
+
 class FamilleProduit(models.Model):
     label = models.TextField()
 
@@ -29,6 +34,11 @@ class Produit(models.Model):
     def get_absolute_url(self):
         return reverse('price_chart', args=[str(self.id)])
 
+    
+    
+    
+    
+    # models.py
 class Price(models.Model):
     value = models.FloatField()
     date = models.DateField()
@@ -36,7 +46,14 @@ class Price(models.Model):
     produit_ID = models.ForeignKey(Produit, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.produit_ID.label} - {self.value} - {self.date}"
+        return f"{self.point_ID.label} - {self.produit_ID.label} - {self.value} - {self.date}"
+
+    def month(self):
+        return self.date.month
+    
+    
+    
+    
 
 class Panier(models.Model):
     label = models.TextField()
@@ -71,3 +88,6 @@ class INPC(models.Model):
 
     def __str__(self):
         return self.mois
+
+
+

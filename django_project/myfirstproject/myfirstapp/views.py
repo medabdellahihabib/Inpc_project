@@ -698,7 +698,7 @@ def panier_produit_detail(request, pk):
     panier_produit = get_object_or_404(PanierProduit, pk=pk)
     return render(request, 'myfirstapp/panier_produit_detail.html', {'panier_produit': panier_produit})
 
-def panier_produit_new(request):
+""" def panier_produit_new(request):
     if request.method == "POST":
         form = PanierProduitForm(request.POST)
         if form.is_valid():
@@ -708,6 +708,20 @@ def panier_produit_new(request):
     else:
         form = PanierProduitForm()
     return render(request, 'myfirstapp/panier_produit_edit.html', {'form': form})
+
+ """
+from .forms import PanierProduitForm  # Make sure to import the correct form
+
+def panier_produit_new(request):
+    if request.method == "POST":
+        form = PanierProduitForm(request.POST)
+        if form.is_valid():
+            panier_produit = form.save()
+            return redirect('panier_produit_detail', pk=panier_produit.pk)
+    else:
+        form = PanierProduitForm()
+    return render(request, 'myfirstapp/panier_produit_edit.html', {'form': form})
+
 
 def panier_produit_edit(request, pk):
     panier_produit = get_object_or_404(PanierProduit, pk=pk)
@@ -820,8 +834,6 @@ def predict_inpc(date):
     prediction = model.predict(month_values[['2016', '2017', '2018', '2019', '2020', '2021', '2022', 'Mois_Num']])
     return prediction[0]
 
-
-
 def inpc_view1(request):
     if request.method == 'POST':
         form = PredictionForm(request.POST)
@@ -867,14 +879,6 @@ def generate_pdf(predicted_inpc, prediction_date):
         return HttpResponse('Error generating PDF', status=500)
 
     return response
-
-
-
-
-
-
-
-
 
 
 
@@ -955,23 +959,23 @@ import pandas as pd
 from .models import INPC
 
 def inpc_graphs_view(request):
-    # Récupérer les données de la base de données ou utilisez les données en dur
+    
     inpc_data = INPC.objects.all()
 
-    # Créer un DataFrame avec les données
+    
     df_inpc = pd.DataFrame(list(inpc_data.values()))
 
-    # Convertir les noms de colonnes en minuscules
+    
     df_inpc.columns = [col.lower() for col in df_inpc.columns]
 
-    # Imprimer les noms des colonnes
+    
     print(df_inpc.columns)
 
-    # Graphique interactif Plotly pour l'évolution de l'INPC par mois
+    
     fig1 = px.line(df_inpc, x='mois', y=df_inpc.columns[2:], title='Évolution de l\'INPC par mois (2016-2023)',
                    labels={'value': 'INPC', 'variable': 'Année'})
 
-    # Graphique Seaborn pour l'évolution de l'INPC par mois
+    
     plt.figure(figsize=(12, 6))
     sns.lineplot(data=df_inpc.melt(id_vars='mois'), x='mois', y='value', hue='variable')
     plt.title('Évolution de l\'INPC par mois (2016-2023)')
@@ -979,113 +983,190 @@ def inpc_graphs_view(request):
     plt.ylabel('INPC')
     plt.legend(title='Année')
 
-    # Graphique interactif Plotly pour l'évolution de l'INPC par année
-    fig2 = px.line(df_inpc, x='mois', y=df_inpc.columns[2:], title='Évolution de l\'INPC par année (2016-2023)',
-                   labels={'value': 'INPC', 'variable': 'Année'}, animation_frame='mois')
+    
+    # fig2 = px.line(df_inpc, x='mois', y=df_inpc.columns[2:], title='Évolution de l\'INPC par année (2016-2023)',
+    #                labels={'value': 'INPC', 'variable': 'Année'}, animation_frame='mois')
 
-    # Graphique à barres pour représenter les valeurs INPC par année
+    
     fig3 = px.bar(df_inpc.melt(id_vars=['mois'], value_vars=df_inpc.columns[2:]),
                   x='mois', y='value', color='variable',
                   title='Valeurs INPC par année (2016-2023)')
 
-    # Graphique en nuage de points pour montrer la corrélation entre les années
+    
     fig4 = px.scatter(df_inpc.melt(id_vars=['mois'], value_vars=df_inpc.columns[2:]),
                       x='mois', y='value', color='variable',
                       title='Corrélation entre les années (2016-2023)')
 
-    # Exclure le tracé de la colonne 'id' dans les graphiques 3 et 4
+    
     fig3.for_each_trace(lambda t: t.update(name=t.name.split('=')[1] if 'id' in t.name else t.name))
     fig4.for_each_trace(lambda t: t.update(name=t.name.split('=')[1] if 'id' in t.name else t.name))
 
-    # Rendre les graphiques en format HTML
+    
     graph1_html = fig1.to_html(full_html=False)
-    graph2_html = fig2.to_html(full_html=False)
+    # graph2_html = fig2.to_html(full_html=False)
     graph3_html = fig3.to_html(full_html=False)
     graph4_html = fig4.to_html(full_html=False)
 
     return render(request, 'myfirstapp/inpc_graphs.html', {
         'graph1_html': graph1_html,
-        'graph2_html': graph2_html,
+        # 'graph2_html': graph2_html,
         'graph3_html': graph3_html,
         'graph4_html': graph4_html
     })
     
-    
-    
 
 
+# views.py
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from myfirstapp.models import Price
+from datetime import datetime, timedelta
+from django.db.models import Avg
 
+from django.http import JsonResponse
+from django.db.models import Avg
+from datetime import datetime, timedelta
+from .models import Price  # Replace with the actual model import
 
-
-
-
+from django.http import JsonResponse
+from django.db.models import Avg
+from datetime import datetime, timedelta
+from .models import Price  # Replace with the actual model import
+from django.http import JsonResponse
+from django.db.models import Sum
 
 
 
 # views.py
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from myfirstapp.models import Price
 from datetime import datetime, timedelta
-
-# views.py
-from django.shortcuts import render
-from django.http import JsonResponse
-from myfirstapp.models import Price
-from datetime import datetime, timedelta
-
+from django.db.models import Avg
+""" 
 def price_chart(request, produit_id):
-    # Récupérer les dates de début et de fin à partir des paramètres GET
     start_date_param = request.GET.get('start_date', None)
     end_date_param = request.GET.get('end_date', None)
 
-    # Définir des dates par défaut si elles ne sont pas fournies
     start_date = datetime.strptime(start_date_param, '%Y-%m-%d') if start_date_param else datetime.now() - timedelta(days=365)
     end_date = datetime.strptime(end_date_param, '%Y-%m-%d') if end_date_param else datetime.now()
 
-    # Récupérer les prix spécifiques au produit et les trier par date
-    prices = Price.objects.filter(produit_ID__id=produit_id, date__range=(start_date, end_date)).order_by('date')
+    prices = (
+        Price.objects
+        .filter(produit_ID__id=produit_id, date__range=(start_date, end_date))
+        .values('date', 'point_ID')
+        .annotate(avg_value=Avg('value'))
+        .order_by('date', 'point_ID')
+    )
 
-    # Préparer les données pour le graphique
+    data = {'labels': [], 'datasets': []}
+
+    current_date = None
+    current_data = {'data': [], 'point_ID': None}
+
+    for price in prices:
+        if current_date == price['date']:
+            current_data['data'].append(price['avg_value'])
+        else:
+            if current_date is not None:
+                data['labels'].append(current_date)
+                current_data['data'] = [sum(current_data['data']) / len(current_data['data'])]  # Calcul de la moyenne
+                current_data['point_ID'] = list(set(current_data['point_ID']))
+                data['datasets'].append(current_data)
+
+            current_date = price['date']
+            current_data = {'data': [price['avg_value']], 'point_ID': [price['point_ID']]}
+
+    # Ajouter la dernière valeur moyenne
+    if current_date is not None:
+        data['labels'].append(current_date)
+        current_data['data'] = [sum(current_data['data']) / len(current_data['data'])]  # Calcul de la moyenne
+        current_data['point_ID'] = list(set(current_data['point_ID']))
+        data['datasets'].append(current_data)
+
+    return JsonResponse(data) """
+
+# myfirstapp/views.py
+from django.http import JsonResponse
+from django.db.models import Avg
+from datetime import datetime, timedelta
+from .models import Price
+# myfirstapp/views.py
+from django.http import JsonResponse
+from django.db.models import Avg
+from datetime import datetime, timedelta
+from .models import Price
+
+
+# views.py
+from django.http import JsonResponse
+from django.db.models import Avg
+from datetime import datetime, timedelta
+from .models import Price
+
+
+from django.http import JsonResponse
+from django.db.models import Avg
+from datetime import datetime, timedelta
+from .models import Price
+
+def price_chart(request, produit_id):
+    start_date_param = request.GET.get('start_date', None)
+    end_date_param = request.GET.get('end_date', None)
+
+    start_date = datetime.strptime(start_date_param, '%Y-%m-%d') if start_date_param else datetime.now() - timedelta(days=365)
+    end_date = datetime.strptime(end_date_param, '%Y-%m-%d') if end_date_param else datetime.now()
+
+    point_ids = Price.objects.filter(produit_ID__id=produit_id, date__range=(start_date, end_date)).values_list('point_ID', flat=True).distinct()
+
     data = {
-        'labels': [price.date for price in prices],
-        'data': [price.value for price in prices],
+        'labels': [],
+        'datasets': []
     }
 
+    for point_id in point_ids:
+        prices = (
+            Price.objects
+            .filter(produit_ID__id=produit_id, point_ID=point_id, date__range=(start_date, end_date))
+            .values('date', 'point_ID')
+            .annotate(avg_value=Avg('value'))
+            .order_by('date', 'point_ID')
+        )
+
+        dataset = {
+            'label': f'Point {point_id}',
+            'data': [],
+            'backgroundColor': f'rgba({point_id * 20}, 99, 132, 0.2)',
+            'borderColor': f'rgba({point_id * 20}, 99, 132, 1)',
+            'borderWidth': 1
+        }
+
+        for price in prices:
+            date = price['date']
+            avg_value = price['avg_value']
+
+            if date not in data['labels']:
+                data['labels'].append(date.strftime('%Y-%m-%d'))
+
+            dataset['data'].append(avg_value)
+
+        data['datasets'].append(dataset)
+
     return JsonResponse(data)
+
+
 
 def price_chart_page(request, produit_id):
     return render(request, 'myfirstapp/price_chart.html', {'produit_id': produit_id})
 
 
-
-
-
-
-
-
-
-from django.shortcuts import render, redirect
-from myfirstapp.models import Produit
-from django.shortcuts import render
-from myfirstapp.models import Produit
-# views.py
-from django.shortcuts import render, redirect
-from myfirstapp.models import Produit
-
 def choose_product(request):
     if request.method == 'POST':
         produit_id = request.POST.get('produit_id')
         if produit_id:
-            # Redirect to the price_chart view with the selected produit_id
             return redirect('price_chart', produit_id=produit_id)
 
-    # Utilisez distinct() sur le champ label pour obtenir des produits distincts
-    produits = Produit.objects.values('label',"id").distinct()
+    produits = Produit.objects.values('label', 'id').distinct()
     return render(request, 'myfirstapp/choose_product.html', {'produits': produits})
-
-
-
-
 
 

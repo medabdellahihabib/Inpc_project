@@ -7,7 +7,7 @@ from .views import panier_produit_export
 from . import views 
 from django.urls import path
 from .views import export_produits_csv
-from .views import choose_product , price_chart , price_chart_page 
+from .views import choose_product , price_chart , price_chart_page
 from .views import (
     panier_list,export_prices_csv ,generate_pdf, panier_produit_export , visualisation_view ,export_produits_csv,export_famille_produits_csv , export_points_de_vente_csv ,export_paniers_csv, about_us, inpc_graphs_view  ,export_csv_view ,panier_detail, panier_new, panier_edit, panier_delete,
     price_list, price_detail, price_new, price_edit, price_delete,
@@ -20,7 +20,11 @@ from .views import (
 
 
 urlpatterns = [
-    # URL pour Panier
+
+    
+    
+    
+    
     
     path('download-pdf/', generate_pdf, name='download_pdf'),
     
@@ -34,6 +38,8 @@ urlpatterns = [
     path('price-chart-page/<int:produit_id>/', views.price_chart_page, name='price_chart_page'),
     
     path('chart/', choose_product, name='choose_product'),
+    
+
     # path('price-chart-page/<int:produit_id>/', price_chart_page, name='price_chart_page'),
 
 

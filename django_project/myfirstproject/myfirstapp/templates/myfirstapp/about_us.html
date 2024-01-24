@@ -1,51 +1,68 @@
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
-<style>
-  .container-max-width {
-    max-width: 125%;
-    margin-left: auto;
-    margin-right: auto;
-  }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 
-  img {
-    max-width: 100%; /* Assurez-vous que les images sont responsives */
-    height: auto;
-  }
-</style>
+    <!-- Styles personnalisés -->
+    <style>
+        .container-max-width {
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-<div class="container-max-width mt-5">
-  <div class="row">
-    <!-- Image à gauche -->
-    <div class="col-md-6">
-      <img src="{% static 'images/ansade2.png' %}" alt="ANSADE Image" class="img-fluid rounded">
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+    <!-- Inclure d'autres fichiers CSS si nécessaire -->
+    <link rel="stylesheet" href="{% static 'monapp/styles.css' %}">
+</head>
+
+<body>
+    <!-- Votre contenu ici -->
+    {% block content %}
+    <div class="container-max-width mt-5">
+        <div class="row">
+            <!-- Image à gauche -->
+            <div class="col-md-6">
+                <img src="{% static 'images/ansade2.png' %}" alt="ANSADE Image" class="img-fluid rounded">
+            </div>
+
+            <!-- Texte à droite -->
+            <div class="col-md-6">
+                <h2 class="display-4">L'ANSADE</h2>
+                <p class="lead">
+                    L'Agence Nationale de la Statistique et de la Démographie (ANSADE) est l'organisme exécutif central
+                    du système statistique national chargé de mettre en place un système d’information statistique harmonisé,
+                    capable de répondre durablement aux besoins de suivi et d’évaluation des politiques publiques et de satisfaire
+                    les besoins prioritaires des utilisateurs en mettant à leur disposition des statistiques de qualité, diffusées
+                    dans les délais et conformes aux normes internationales. Ainsi, l’agence est chargée d’assurer, entre autres :
+                </p>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Assurer la collecte, traitement et la diffusion d’informations statistiques ;</li>
+                    <li class="list-group-item">Assurer les activités de traitement et d’analyse de données, en appui à la décision,
+                        relevant des entités sous tutelle du Ministère en charge de l’économie ;</li>
+                    <li class="list-group-item">Assurer la coordination du Système National Statistique et d’harmonisation en matière
+                        de bonnes pratiques ;</li>
+                    <li class="list-group-item">Contribuer à l’effort national en matière de recherche scientifique à travers la
+                        réalisation des travaux d’analyse et de la recherche scientifique permettant d’alimenter le débat public ;
+                    </li>
+                    <li class="list-group-item">Contribuer au renforcement des capacités des acteurs du SNS à travers l’appui à
+                        l’organisation de la formation initiale et continue du personnel exerçant dans le domaine de la statistique,
+                        de la démographie, la promotion de la recherche et de la diffusion de la culture statistique.</li>
+                </ul>
+            </div>
+        </div>
     </div>
+    {% endblock content %}
+</body>
 
-    <!-- Texte à droite -->
-    <div class="col-md-6">
-      <h2 class="display-4">L'ANSADE</h2>
-      <p class="lead">
-        L'Agence Nationale de la Statistique et de la Démographie (ANSADE) est l'organisme exécutif central
-        du système statistique national chargé de mettre en place un système d’information statistique harmonisé,
-        capable de répondre durablement aux besoins de suivi et d’évaluation des politiques publiques et de satisfaire
-        les besoins prioritaires des utilisateurs en mettant à leur disposition des statistiques de qualité, diffusées
-        dans les délais et conformes aux normes internationales. Ainsi, l’agence est chargée d’assurer, entre autres :
-      </p>
-
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Assurer la collecte, traitement et la diffusion d’informations statistiques ;</li>
-        <li class="list-group-item">Assurer les activités de traitement et d’analyse de données, en appui à la décision,
-          relevant des entités sous tutelle du Ministère en charge de l’économie ;</li>
-        <li class="list-group-item">Assurer la coordination du Système National Statistique et d’harmonisation en matière
-          de bonnes pratiques ;</li>
-        <li class="list-group-item">Contribuer à l’effort national en matière de recherche scientifique à travers la
-          réalisation des travaux d’analyse et de la recherche scientifique permettant d’alimenter le débat public ;
-        </li>
-        <li class="list-group-item">Contribuer au renforcement des capacités des acteurs du SNS à travers l’appui à
-          l’organisation de la formation initiale et continue du personnel exerçant dans le domaine de la statistique,
-          de la démographie, la promotion de la recherche et de la diffusion de la culture statistique.</li>
-      </ul>
-    </div>
-  </div>
-</div>
-{% endblock content %}
+</html>

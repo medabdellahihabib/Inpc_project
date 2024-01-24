@@ -96,8 +96,7 @@ h1 {
 
 
 
-<!-- Ajoutez ces styles dans votre fichier CSS (styles.css) ou directement dans le balisage style de votre page -->
-<style>
+
     .dropdown-menu {
         background-color: #17a2b8; /* Couleur de fond du menu déroulant */
     }
@@ -117,4 +116,4 @@ h1 {
         /* Styles spécifiques pour l'impression */
         /* ... */
     }
-</style>
+

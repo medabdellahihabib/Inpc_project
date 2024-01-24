@@ -53,6 +53,18 @@
     font-size: 14px;
     margin-top: 5px;
   }
+
+  
+    .container-max-width {
+        max-width: 30000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+
+
+
 </style>
 
 <div class="search container w-60 pb-3 pt-4">
@@ -76,7 +88,7 @@
             <h4 class="title"><a href="#">Calcul de l'INPC</a></h4>
             <p class="description">
               Calculer l'INPC à partir des données enregistrées dans les modèles de l'application.
-              Offrir la possibilité d'importer les données à partir d'un fichier CSV pour une mise à jour facile.
+              Offrir la possibilité d'importer les données à partir d'un fichier CSV pour une mise à jour facile et de generer des rapport 
             </p>
           </div>
         </div>
@@ -98,7 +110,7 @@
             <h4 class="title"><a href="#">Modèles de Machine Learning</a></h4>
             <p class="description">
               Fournir des modèles de machine learning pour prédire l'évolution de l'INPC
-              basée sur les données historiques.
+              basée sur les données historiques et generer des rapport .
             </p>
           </div>
         </div>
@@ -117,10 +129,9 @@
       </div>
     </div>
   </div>
-</section><!-- End Services Section -->
+</section>
 </div>
 
-<!-- Ajout du script JavaScript pour forcer la hauteur à 100% -->
 <script>
   window.onload = function() {
     document.documentElement.style.height = '100%';
